@@ -30,7 +30,7 @@ function MyComponent2 (){
             <p>Comment: {comment}</p>
             <select value={payment} onChange={handlePayment}>
                 <option value=" "> Select an option </option>
-                <option value="Momo">Momo</option>
+                <option value="Momo">Mono</option>
                 <option value="Visa">Visa</option>
             </select>
             <p>Payment: {payment}</p>
