@@ -1,37 +1,74 @@
-import React from "react";
-import styled from "styled-components";
-import FileList from "./FileList";
-import UploadButton from "./UploadButton";
-import ActionButtons from "./ActionButtons";
+import React from 'react';
+import { Button, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
+export default function FileUploader ()  {
+    const navigate=useNavigate();
+    return (
+            <div className="d-flex flex-column p-4">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h1>TẢI TỆP</h1>
+                    <h4>Phan Thảo Vy</h4>
+                </div>
+                <section className="" style={{backgroundColor: "white", padding: '24px'}}>
+                    <div className="d-flex justify-content-evenly mb-2"> 
+                        <h5>Danh sách tệp đã tải lên</h5>
+                        <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                        <div className='btn btn-secondary'>Gần nhất</div>
+                    </div>
+                    <hr />
+                    <div className="d-flex justify-content-between">
+                    <table className="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">ID Máy In</th>
+                                <th scope="col">Tên máy</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col">Người dùng</th>
+                                <th scope="col">Tên tệp</th>
+                                <th scope="col">Số trang</th>
+                                <th scope="col">Kích thước</th>
+                                <th scope="col">Loại tệp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td>P001</td>
+                                <td>Máy in A</td>
+                                <td>2024-10-10 13:24:17</td>
+                                <td>Phan Thao Vy</td>
+                                <td>BTVN</td>
+                                <td>10</td>
+                                <td>A4</td>
+                                <td>PDF</td>
+                                </tr>
+                                <tr>
+                                <td>P002</td>
+                                <td>Máy in B</td>
+                                <td>2024-09-19 15:24:17</td>
+                                <td>Phan Thao Vy</td>
+                                <td>BTVN2</td>
+                                <td>1</td>
+                                <td>A4</td>
+                                <td>PDF</td>
+                                </tr>
+                                <tr>
+                                <td>P003</td>
+                                <td>Máy in c</td>
+                                <td>2024-08-30 07:30:56</td>
+                                <td>Phan Thao Vy</td>
+                                <td>CNPM</td>
+                                <td>2</td>
+                                <td>A4</td>
+                                <td>PDF</td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    </div>
+                </section>
 
-const FileUploader = () => {
-  return (
-    <UploaderContainer>
-      <UploaderContent>
-        <UploadButton />
-        <FileList />
-        <ActionButtons />
-      </UploaderContent>
-    </UploaderContainer>
-  );
+            </div>
+        
+
+    );
 };
-
-const UploaderContainer = styled.div`
-  display: flex;
-  max-width: 798px;
-  flex-direction: column;
-`;
-
-const UploaderContent = styled.div`
-  background-color: rgba(128, 156, 172, 0.8);
-  display: flex;
-  width: 100%;
-  padding: 0 35px 18px 80px;
-  flex-direction: column;
-  @media (max-width: 991px) {
-    max-width: 100%;
-    padding: 0 20px 18px;
-  }
-`;
-
-export default FileUploader;

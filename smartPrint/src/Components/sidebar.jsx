@@ -49,7 +49,7 @@ export default function Sidebar(props) {
 };
 Nav.Link = styled.div`
 &:hover {
-    background-color: blue;
+    background-color:#7c94a4 ;
 }
 `;
 const Content = styled.div`
