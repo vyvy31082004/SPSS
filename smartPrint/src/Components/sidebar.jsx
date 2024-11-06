@@ -1,7 +1,11 @@
 import React,{useState} from 'react';
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-export default function Sidebar() {
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+export default function Sidebar(props) {
+    const navigate=useNavigate();
+    const {content}=props;
     return (
         // <Nav defaultActiveKey="/home" className="flex-column">
         //     <Nav.Link href="/home">Active</Nav.Link>
@@ -11,35 +15,43 @@ export default function Sidebar() {
         //         Disabled
         //     </Nav.Link>
         // </Nav>
-        <div style={{ display: 'flex' }}>
+
+        <div  className='d-flex'>
             <div className="sidebar">
                 <Navbar className="flex-column " style={{ height: '100vh', width: '200px', backgroundColor: '#D9D9D9' }}>
-                <img
-                            src= "src\assets\logo.png"// Replace with your image path or URL
-                            style={{ width: '100px', height: '100px', marginBottom: '10px' }}
-                        />
-                        <h5 style={{textAlign: 'center' }}> Danh sách</h5>
+                    <img
+                        src= "src\assets\logo.png"// Replace with your image path or URL
+                        style={{ width: '100px', height: '100px', marginBottom: '10px' }}
+                    />
+                    <h5 style={{textAlign: 'center' }}>Menu</h5>
                     <Nav className="flex-column">
-                        <Nav.Link href="#PrintingLog">Lịch sử in</Nav.Link>
-                        <Nav.Link href="#Print">In</Nav.Link>
-            
+                        <Nav.Item>
+                            <Nav.Link className='p-2' onClick={()=>{navigate('/PrintLog')}}>
+                            <i className="bi bi-clock-history pe-2"></i>
+                            Lịch sử in
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link className='p-2' onClick={()=>{navigate('/Print')}}>
+                                <i className="bi bi-printer-fill pe-2"></i>
+                                In
+                            </Nav.Link>
+                        </Nav.Item>
                     </Nav>
                 </Navbar>
             </div>
-            <Container className="In" style={{ marginLeft: '250px', padding: '20px' }}>
-                <div className="In">IN</div>
-                <div className="Overlay">
-                    <div className="Tệp"> TỆP </div>
-                    <div className="board_selectfile">
-                        <div className="selectFile">Chọn tệp</div>
-                    </div>
-                    <div className="board_print">
-                            <div className="printletter">In</div>
-                    </div>
-                </div>
-
-            </Container>
-        
+            <Content>
+                {content}
+            </Content>
+            
         </div>
     );
 };
+Nav.Link = styled.div`
+&:hover {
+    background-color: blue;
+}
+`;
+const Content = styled.div`
+    flex-grow: 1;
+`;

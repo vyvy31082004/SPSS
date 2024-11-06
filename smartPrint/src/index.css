@@ -2,13 +2,9 @@ body{
         background-color:#7c94a4;
 }
 .In{
- 
-        text-align: left;
         padding:20px;
         font-weight:bold;
         font-size:60px;
-        margin-left: -187px; /* Di chuyển sang bên trái */
-        margin-top: -80x;
 }
 .Overlay{
         position: absolute;
@@ -18,8 +14,6 @@ body{
         width: 70%; /* Kích thước của lớp phủ */
         height: 70%; /* Kích thước của lớp phủ */
         background-color: white;
-        opacity: 1;
-        z-index: 1000;
         display: flex;
         justify-content: center;
         align-items: center;
