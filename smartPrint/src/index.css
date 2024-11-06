@@ -1,97 +1,87 @@
 body{
         background-color:#7c94a4;
 }
-
-
-
-
-.card{
-      border:20px solid #3b6879 ;
-      box-shadow: 20px 20px 20px 264d7e ;
-      padding: 20px;
-      margin: 60px;
-      text-align: center;
-      max-width: 1000px;
-      display:inline-block;
-      
-
+.In{
+ 
+        text-align: left;
+        padding:20px;
+        font-weight:bold;
+        font-size:60px;
+        margin-left: -187px; /* Di chuyển sang bên trái */
+        margin-top: -80x;
 }
-.card .card-image{
-        max-width: 50%;
-        height:auto;
-        border-radius:50%;
-        margin-bottom: 10px;
-}
-
-.card .card-title{
-        font-family: Times New Romand ;
-        color: rgb(143, 39, 49) ;
-
+.Overlay{
+        position: absolute;
+        top: 55%; /* Giữ nguyên để căn giữa theo chiều dọc */
+        left: 43%; /* Điều chỉnh để di chuyển sang trái hoặc phải */
+        right: 50%;
+        width: 70%; /* Kích thước của lớp phủ */
+        height: 70%; /* Kích thước của lớp phủ */
+        background-color: white;
+        opacity: 1;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translate(-30%, -50%); /* Điều chỉnh để căn chỉnh chính xác */
 }
 
-.card.card-text{
-        font-family: Arial;
-        color: red;
+.Tệp{
+        position: relative; /* Hoặc absolute */
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        text-align: left;
+        font-weight:bold;
+        font-size:30px;
+        margin-left: -650px; /* Di chuyển sang bên trái */
+        margin-top: -200px;
 }
-
-.student{
-        font-family:Arial;
-        font-size:1cm;
-        padding:50px;
-        color:rgb(24, 124, 124);
-        border: 5px solid rgb(91, 43, 180) ;
-
+.board_selectfile{
+        position: absolute;
+        top: 40%; /* Giữ nguyên để căn giữa theo chiều dọc */
+        left: 30%; /* Điều chỉnh để di chuyển sang trái hoặc phải */
+        right: 50%;
+        width: 29%; /* Kích thước của lớp phủ */
+        height: 10%; /* Kích thước của lớp phủ */
+        background-color: #7c94a4;
+        opacity: 1;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translate(-30%, -50%); /* Điều chỉnh để căn chỉnh chính xác */
 }
-.welcome-message{
-        font-size:1cm;
-        color:blueviolet;
-        background-color:black;
-        padding:1px;
-        border-radius: 20px;
+.selectFile{
+        position: absolute; /* Hoặc absolute */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: left;
+        font-weight:bold;
+        font-size:33px;
+        margin-left: -8px; /* Di chuyển sang bên trái */
+        margin-top: -80x;
 }
-
-.list-category{
-        color:blue;
+.board_print{
+        
+        position: absolute;
+        top: 40%; /* Giữ nguyên để căn giữa theo chiều dọc */
+        left: 70%; /* Điều chỉnh để di chuyển sang trái hoặc phải */
+        right: 50%;
+        width: 20%; /* Kích thước của lớp phủ */
+        height: 10%; /* Kích thước của lớp phủ */
+        background-color: #0B4661;
+        opacity: 1;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translate(-30%, -50%); /* Điều chỉnh để căn chỉnh chính xác */
 }
-
-.counter-Container{
-        text-align: center;
-        font-family: Arial;
-
+.printletter{
+        position: absolute; /* Hoặc absolute */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color:aliceblue;
+        text-align: left;
+        font-weight:bold;
+        font-size:33px;
+        margin-left: -7px; /* Di chuyển sang bên trái */
+        margin-top: -80x;
 }
-
-.count-Display{
-        font-size:3cm;
-        margin-top:0;
-        margin-bottom:50px;
-}
-.counter-button{
-        width:100px;
-        height:80px;
-        font-size:0.4cm;
-        font-weight: bold;
-        margin:0 px 10 px;
-        background-color: blueviolet;
-        color:white;
-        border-radius: 2px;
-}
-.counter-button:hover{
-        background-color: blueviolet;
-}
-.to-do-list {
-        text-align: center;
-        margin-top: 100px;
-}
-.to-do-list .title{
-        text-align: center;
-        color: rgb(212, 83, 104) ;
-        border: 20px purple ;
-        background-color: rgb(6, 12, 12);
-        padding: 10px 20px;
-        display: inline-block;
-}
-
-.to-do-list.Text{
-        font-size:2 cm;
-}
-

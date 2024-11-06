@@ -1,9 +1,11 @@
+import Sidebar from'./Components/sidebar';
 
-function App() {
-  
-
+function App()  {
+  return (
+    
+    <Sidebar/>
     
     
+  )
 }
-
 export default App
