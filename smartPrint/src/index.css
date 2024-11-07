@@ -5,12 +5,15 @@ body{
         background-color: #7c94a4 !important;
         border-color: #7c94a4 !important;
         
+ 
         
     }
+
 .btn-primary:hover {
         background-color: #5a6f7f !important; /* Đổi màu theo ý muốn */
         border-color: #5a6f7f !important;
  }
+ .btn-
 .In{
         padding:20px;
         font-weight:bold;
