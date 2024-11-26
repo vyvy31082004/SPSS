@@ -3,6 +3,7 @@ import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 export default function Print ()  {
     const navigate=useNavigate();
+    
     return (
             <div className="d-flex flex-column p-4">
                 <div className="d-flex justify-content-between align-items-center mb-2">

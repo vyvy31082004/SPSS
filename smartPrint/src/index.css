@@ -8,10 +8,26 @@ body{
  
         
     }
+.Close{
+        background-color: #5683a5 !important; /* Đổi màu theo ý muốn */
+        border-color: #5085ae !important;
+}
+.Next{
+        background-color: #203e55 !important; /* Đổi màu theo ý muốn */
+        
+}
 
 .btn-primary:hover {
         background-color: #5a6f7f !important; /* Đổi màu theo ý muốn */
         border-color: #5a6f7f !important;
+ }
+ .btn-secondary{
+        background-color: #203e55 !important; /* Đổi màu theo ý muốn */
+        border-color: #203e55 !important;
+ }
+ .btn-secondary:hover{
+        background-color: #356e99 !important; /* Đổi màu theo ý muốn */
+        border-color: #356e99!important;
  }
  .btn-
 .In{
@@ -42,6 +58,25 @@ body{
         margin-left: -650px; /* Di chuyển sang bên trái */
         margin-top: -200px;
 }
+.custom-dropdown-btn {
+        background-color: #162c3b !important; /* Blue */ 
+        color: rgb(242, 242, 242);
+        border: none;
+}
+      
+.custom-dropdown-btn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+}
+      
+.custom-dropdown-menu {
+        background-color: #f1f1f1; /* Light gray */
+        color: #333;
+      }
+      
+.custom-dropdown-menu .dropdown-item:hover {
+        background-color: #6091b6; /* Darker gray on hover */
+}
+      
 .board_selectfile{
         position: absolute;
         top: 40%; /* Giữ nguyên để căn giữa theo chiều dọc */

@@ -1,24 +1,67 @@
-import React from 'react';
 import styled from 'styled-components';
-
+import React, { useState } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown'
 const PageSizeSelector = () => {
+  const [selectedOption, setSelectedOption] = useState('Select');
+  
+  const handleSelect = (eventKey) => {
+    setSelectedOption(eventKey);
+  };
+  const [inputValue, setInputValue] = useState('');
+  // Hàm xử lý khi người dùng nhập vào input
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  
+   // Hàm xử lý khi form được submit
+   const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  const [inputValue2, setInputValue2] = useState('');
+  const handleChange2 = (event) => {
+    setInputValue2(event.target.value);
+  };
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+  };
   return (
     <SelectorContainer>
       <SizeOption>
         <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/d6aedd64e496c87857ed417ffdf2f83ec1a3eb5ce76c8e8ce07fe15ab0b47157?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="Format icon" />
         <Label>Định dạng</Label>
-        <FormatSelector>
-          <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/9855a6d8b0072c8c6f0b712787e2c2a42964a4ee3b1de0352402c419e9866832?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="A4 icon" />
-          <span>A4</span>
-        </FormatSelector>
+        <Dropdown onSelect={handleSelect}>
+        <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-basic">
+          {selectedOption}
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="custom-dropdown-menu">
+          <Dropdown.Item eventKey="A4">A4</Dropdown.Item>
+          <Dropdown.Item eventKey="A3">A3</Dropdown.Item> 
+          <Dropdown.Item eventKey="Something else">Something else</Dropdown.Item>
+        </Dropdown.Menu>
+    </Dropdown>
       </SizeOption>
       <DimensionOption>
         <Label>Độ rộng</Label>
-        <Value>2100</Value>
+        <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                placeholder="Nhập vào đây"
+              />
+        </form>
       </DimensionOption>
       <DimensionOption>
         <Label>Chiều cao</Label>
-        <Value>2970</Value>
+        <form onSubmit={handleSubmit2}>
+              <input
+                type="text"
+                value={inputValue2}
+                onChange={handleChange2}
+                placeholder="Nhập vào đây"
+              />
+        </form>
       </DimensionOption>
       <UnitInfo>Đơn vị là phần mười milimét</UnitInfo>
     </SelectorContainer>
