@@ -8,7 +8,6 @@ import PrintModeSelector from './PrintModeSelector';
 const PrintPropertiesPage = () => {
   return (
     <PropertiesContainer>
-      <Header>THUỘC TÍNH</Header>
       <ContentWrapper>
         <PageSizeSection>
           <SectionTitle>Kích thước trang</SectionTitle>
@@ -26,10 +25,7 @@ const PrintPropertiesPage = () => {
           <SectionTitle>Chế độ in</SectionTitle>
           <PrintModeSelector />
         </PrintModeSection>
-        <ActionButtons>
-          <ConfirmButton>ĐỒNG Ý</ConfirmButton>
-          <CancelButton>HỦY</CancelButton>
-        </ActionButtons>
+  
       </ContentWrapper>
     </PropertiesContainer>
   );

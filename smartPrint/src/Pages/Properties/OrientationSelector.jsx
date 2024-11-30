@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import Dropdown from 'react-bootstrap/Dropdown'
 const OrientationSelector = () => {
+  const [selectedOption, setSelectedOption] = useState('Select');
+  
+  const handleSelect = (eventKey) => {
+    setSelectedOption(eventKey);}
   return (
     <SelectorContainer>
-      <OrientationOption>
-        <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/bb8698bc2051d4e83e43495202a59618612a055265e0644cb8efcd7c9309ce3c?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="Portrait icon" />
-        <Label>Chiều dọc</Label>
-      </OrientationOption>
-      <OrientationOption>
-        <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/574a5fadb306c528efaac1824699080a1e39a88cefc04c76e9f3427b91b4431b?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="Landscape icon" />
-        <Label>Chiều ngang</Label>
-      </OrientationOption>
+      <Dropdown onSelect={handleSelect}>
+        <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-basic">
+          {selectedOption}
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="custom-dropdown-menu">
+          <Dropdown.Item eventKey="Chiều dọc">Chiều dọc</Dropdown.Item>
+          <Dropdown.Item eventKey="Chiều ngang">Chiều ngang</Dropdown.Item> 
+          
+        </Dropdown.Menu>
+      </Dropdown>
     </SelectorContainer>
   );
 };
