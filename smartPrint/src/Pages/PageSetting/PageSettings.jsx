@@ -28,14 +28,23 @@ function PageSettings() {
 }
 
 const SettingsWrapper = styled.section`
-  gap: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #B0C4DE; /* Light blue background */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px; /* Card width */
+  margin: 0 auto; /* Center the card */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
   @media (max-width: 991px) {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0px;
+    max-width: 100%;
+    padding: 15px;
   }
 `;
+
 
 const SettingsColumn = styled.div`
   display: flex;

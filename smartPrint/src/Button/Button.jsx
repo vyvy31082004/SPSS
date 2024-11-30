@@ -1,17 +1,11 @@
-//Cách1: external
-//c2: modules
-//Inline
-import styles from './Button.module.css'
-function Button(){
-    return (
-        <button className={styles.button}>Click me</button>
-    );
+// Button.js
+import React from "react";
+import styles from './Button.module.css'; // Import CSS module
+
+function Button({ title }) {
+  return (
+    <button className={styles.button}>{title}</button> // Áp dụng lớp 'button' từ CSS module
+  );
 }
-export default Button 
-//Inline:
-//const styles ={background-color: aquamarine;
- //   color:black;
-   // padding: 10px 20px;
-   //order-radius: 10px;
-    //border: none;
-    //cursor: pointer;}
+
+export default Button;
