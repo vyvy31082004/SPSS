@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "./Header";
+import Header from "../../Components/header";
 import PrinterSelection from "./PrinterSelection";
+import PrintContainer from "../../Components/container";
 import PrintOptions from "./PrintOptions";
 import PageSettings from "./PageSettings";
 import PrintActions from "./PrintActions";
@@ -9,55 +10,65 @@ import PrintActions from "./PrintActions";
 function PrintSettingsPage() {
   return (
     <PageWrapper>
-      <ContentContainer>
-        <Header />
+      <PrintContainer>
+        <Header title="CÀI ĐẶT" />
         <MainContent>
           <PrinterSelection />
-          <OptionsContainer>
+          {/* <OptionsContainer>
             <PrintOptions />
             <PageSettings />
             <PrintActions />
-          </OptionsContainer>
+          </OptionsContainer> */}
         </MainContent>
-      </ContentContainer>
+      </PrintContainer>
     </PageWrapper>
   );
 }
 
+// Styled Components
+
 const PageWrapper = styled.div`
   display: flex;
-  max-width: 856px;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f4f8; /* Light background */
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px;
 `;
 
 const ContentContainer = styled.main`
-  background-color: rgba(128, 156, 172, 0.8);
+  background-color: rgba(128, 156, 172, 0.8); /* Semi-transparent blue */
   display: flex;
-  width: 100%;
-  padding-bottom: 15px;
   flex-direction: column;
+  width: 100%;
+  max-height: 800px; /* Center content */
+  border-radius: 10px; /* Smooth corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
   @media (max-width: 991px) {
     max-width: 100%;
+    padding: 15px;
   }
 `;
 
-const MainContent = styled.section`
+const MainContent = styled.div`
   display: flex;
-  margin-top: 34px;
+  margin-top: 20px;
   width: 100%;
-  flex-direction: column;
-  padding: 0 43px 0 21px;
+  padding: 0 20px;
   @media (max-width: 991px) {
-    max-width: 100%;
-    padding: 0 20px;
+    padding: 0 10px;
   }
 `;
 
 const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between options */
   width: 100%;
+  margin-top: 20px;
   @media (max-width: 991px) {
-    max-width: 100%;
-    margin-right: 10px;
+    gap: 15px;
   }
 `;
 
