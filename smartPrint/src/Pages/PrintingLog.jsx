@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import AxiosInstance from '../Components/axios';
 export default function PrintLog ()  {
-    const navigate=useNavigate();
+    
+    const [histories,setHistory]=useState([]);
+    //api get 
+    useEffect(()=>{
+            AxiosInstance.get(`history/`)
+                .then(res=>setHistory(res.data))
+                .catch(err=>console.log(err))
+    })
     return (
             <div className="d-flex flex-column p-4">
                 <div className="d-flex justify-content-between align-items-center mb-2">
@@ -17,7 +25,7 @@ export default function PrintLog ()  {
                     </div>
                     <hr />
                     <div className="d-flex justify-content-between">
-                    <table class="table">
+                    <table className="table">
                             <thead>
                                 <tr>
                                 <th scope="col">ID Máy In</th>
@@ -31,36 +39,29 @@ export default function PrintLog ()  {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                <td>P001</td>
-                                <td>Máy in A</td>
-                                <td>2024-10-10 13:24:17</td>
-                                <td>Phan Thao Vy</td>
-                                <td>BTVN</td>
-                                <td>10</td>
-                                <td>A4</td>
-                                <td>PDF</td>
-                                </tr>
-                                <tr>
-                                <td>P002</td>
-                                <td>Máy in B</td>
-                                <td>2024-09-19 15:24:17</td>
-                                <td>Phan Thao Vy</td>
-                                <td>BTVN2</td>
-                                <td>1</td>
-                                <td>A4</td>
-                                <td>PDF</td>
-                                </tr>
-                                <tr>
-                                <td>P003</td>
-                                <td>Máy in c</td>
-                                <td>2024-08-30 07:30:56</td>
-                                <td>Phan Thao Vy</td>
-                                <td>CNPM</td>
-                                <td>2</td>
-                                <td>A4</td>
-                                <td>PDF</td>
-                                </tr>
+                                {
+                                    histories.length>0?(
+                                        histories.map((d, i) => (
+                                            <tr key={i}>
+                                                <td> {d.ID}</td>
+                                                <td> {d.Name}</td>
+                                                <td> {d.Time}</td>
+                                                <td> {d.user}</td>
+                                                <td> {d.File}</td>
+                                                <td> {d.Pages}</td>
+                                                <td> {d.size}</td>
+                                                <td> {d.Type}</td>
+                                            </tr>
+                                        ))
+                                       
+                                    ):(
+                                        <tr>
+                                            <td>
+                                                Khong tim thay du lieu
+                                            </td>
+                                        </tr>
+                                    )
+                                }
                             </tbody>
                     </table>
                     </div>
