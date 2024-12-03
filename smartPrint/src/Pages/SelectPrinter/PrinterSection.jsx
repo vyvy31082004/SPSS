@@ -53,10 +53,21 @@
 
 // export default PrinterSection;
 import React, { useState } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
+import { useNavigate, useLocation } from "react-router-dom"; // Import for navigation
+import Button from '../../Button/Button';
+import PrintContainer from '../../Components/container';
 
 const PrinterList = () => {
   const [selectedPrinter, setSelectedPrinter] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClose = () => {
+    console.log("Đã  chọn máy in")
+    // Navigate back with the selected printer data
+    navigate("/Printpagesetting", { state: { selectedPrinter } });
+  };
 
   const printers = [
     { id: 'A', name: 'Máy in A', status: 'Sẵn sàng', location: 'B4' },
@@ -78,7 +89,7 @@ const PrinterList = () => {
   };
 
   return (
-    <div>
+    <PrintContainer>
       <h3>Danh sách máy in</h3>
       <Table striped bordered hover>
         <thead>
@@ -116,8 +127,9 @@ const PrinterList = () => {
           ))}
         </tbody>
       </Table>
+      <Button title="Close" onClick={handleClose} />
      
-    </div>
+    </PrintContainer>
   );
 };
 

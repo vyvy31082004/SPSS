@@ -28,8 +28,7 @@ const PageSizeSelector = () => {
   return (
     <SelectorContainer>
       <SizeOption>
-        <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/d6aedd64e496c87857ed417ffdf2f83ec1a3eb5ce76c8e8ce07fe15ab0b47157?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="Format icon" />
-        <Label>Định dạng</Label>
+        {/* <Icon src="https://cdn.builder.io/api/v1/image/assets/TEMP/d6aedd64e496c87857ed417ffdf2f83ec1a3eb5ce76c8e8ce07fe15ab0b47157?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="Format icon" /> */}
         <Dropdown onSelect={handleSelect}>
         <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-basic">
           {selectedOption}
@@ -37,11 +36,11 @@ const PageSizeSelector = () => {
         <Dropdown.Menu className="custom-dropdown-menu">
           <Dropdown.Item eventKey="A4">A4</Dropdown.Item>
           <Dropdown.Item eventKey="A3">A3</Dropdown.Item> 
-          <Dropdown.Item eventKey="Something else">Something else</Dropdown.Item>
+          {/* <Dropdown.Item eventKey="Something else">Something else</Dropdown.Item> */}
         </Dropdown.Menu>
-    </Dropdown>
+        </Dropdown>
       </SizeOption>
-      <DimensionOption>
+      {/* <DimensionOption>
         <Label>Độ rộng</Label>
         <form onSubmit={handleSubmit}>
               <input
@@ -63,7 +62,7 @@ const PageSizeSelector = () => {
               />
         </form>
       </DimensionOption>
-      <UnitInfo>Đơn vị là phần mười milimét</UnitInfo>
+      <UnitInfo>Đơn vị là phần mười milimét</UnitInfo> */}
     </SelectorContainer>
   );
 };
@@ -71,15 +70,18 @@ const PageSizeSelector = () => {
 const SelectorContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 13px;
   font-family: 'Roboto', sans-serif;
+  font-size: 14px;
   color: #000;
 `;
+
 
 const SizeOption = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 11px;
+  
 `;
 
 const Icon = styled.img`
@@ -89,8 +91,8 @@ const Icon = styled.img`
 `;
 
 const Label = styled.span`
-  font-size: 20px;
-  line-height: 1;
+  color: #000;
+  font: 400 24px "Roboto", sans-serif;
 `;
 
 const FormatSelector = styled.div`
