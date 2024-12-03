@@ -1,7 +1,15 @@
 const FILELIST= require('../models/FILELIST');
 
-class  FileController{
-   
+const FileController = {
+    addFile: async(req,res) => {
+        try {
+            newFile= new FILELIST (req.body);
+            savedFile = await newFile.save();
+            res.status(200).json(savedFile);
+        } catch (error) {
+            res.status(500).json(error);   
+        }
+    }
 }
 
-module.exports = new FileController;
+module.exports = FileController;
