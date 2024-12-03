@@ -19,11 +19,13 @@ export default function Sidebar(props) {
         <div  className='d-flex'>
             <div className="sidebar">
                 <Navbar className="flex-column " style={{ height: '100vh', width: '200px', backgroundColor: '#D9D9D9' }}>
-                    <img
-                        src= "src\assets\logo.png"// Replace with your image path or URL
-                        style={{ width: '100px', height: '100px', marginBottom: '10px' }}
-                    />
-                    <h5 style={{textAlign: 'center' }}>Menu</h5>
+                    <div className='' onClick={()=>{navigate('/Home')}}>
+                        <img
+                            src= "src\assets\logo.png"// Replace with your image path or URL
+                            style={{ width: '100px', height: '100px', marginBottom: '10px' }}
+                        />
+                        <h5 style={{textAlign: 'center' }}>SPSS</h5>
+                    </div>
                     <Nav className="flex-column">
                         <Nav.Item>
                             <Nav.Link className='p-2' onClick={()=>{navigate('/PrintLog')}}>

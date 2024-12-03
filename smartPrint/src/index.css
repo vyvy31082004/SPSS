@@ -8,6 +8,10 @@ body{
  
         
     }
+.submit{
+        background-color: #19599A !important;
+        border-color: #7c94a4 !important;
+}
 .Close{
         background-color: #5683a5 !important; /* Đổi màu theo ý muốn */
         border-color: #5085ae !important;

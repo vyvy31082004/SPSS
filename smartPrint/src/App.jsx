@@ -14,7 +14,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Pages/LogIn/LogInPage';
-
+import Home from './Pages/Home';
 function App()  {
   const location=useLocation();
   const temp=location.pathname==="/"
@@ -33,7 +33,7 @@ function App()  {
                 <Route path ="/Print" element={<Print/>}></Route>
                 <Route path ="/PrintLog" element={<PrintLog/>}></Route>
                 <Route path ="/Print/Upload" element={<FileUploader/>}></Route>
-
+                <Route path ="/Home" element={<Home/>}></Route>
                 <Route path ="/Printpagesetting" element={<PrintSettingsPage/>}></Route>
                 <Route path ="/PrintProp" element={<PrintPropertiesPage/>}></Route>
                  <Route path ="/Print/Upload" element={<Modal/>}></Route>
