@@ -1,60 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import RadioOption from "../../Components/RadioOption";
+import { Dropdown } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { Form } from "react-bootstrap";
 
 function PrintOptions() {
   return (
     <OptionsWrapper>
-      <OptionsTabs>
-        <TabButton>
-          <TabIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a7149beae9142923931bf4db0531a1ad21c2beb9e602c9261d1de423f789525?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="" />
-          <TabText>Thuộc tính</TabText>
-        </TabButton>
-        <TabButton>
-          <TabIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0b3ba86f6c38554c8f94e1de750a249683fd9d21b10237c6b995250d46ffa7c?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="" />
-          <TabText>Hoạt động</TabText>
-        </TabButton>
-      </OptionsTabs>
       <OptionsContent>
         <OptionColumn>
-          <OptionGroup>
-            <RadioOption>
-              <RadioIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/574a5fadb306c528efaac1824699080a1e39a88cefc04c76e9f3427b91b4431b?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="" />
-              <OptionText>Lựa chọn</OptionText>
-            </RadioOption>
-            <Placeholder />
-          </OptionGroup>
+          <CopyTitle>Phạm vi trang</CopyTitle>
+          <PrintRangeOptions/>
         </OptionColumn>
         <OptionColumn>
-          <CopyOptions>
             <CopyTitle>Bản sao</CopyTitle>
             <CopyControls>
-              <CopyCount>
-                <CopyLabel>Số lượng bản sao</CopyLabel>
-                <CopyIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe1674320aafa0f08129b92213b57b98c90f440496ed1713042b3624bcf6ca88?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="" />
-              </CopyCount>
-              <CopyActions>
+            <IconWrapper>
+            <Icon
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe1674320aafa0f08129b92213b57b98c90f440496ed1713042b3624bcf6ca88?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757"
+              alt=""
+            />
+            <OptionText>Số lượng: </OptionText>
+            </IconWrapper>
+            
+            
+            <InputField placeholder="1" type="number"></InputField>
+            
+            
+              {/* <CopyActions>
                 <CopyNumber>1</CopyNumber>
                 <SortOption>
                   <SortIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/bb8698bc2051d4e83e43495202a59618612a055265e0644cb8efcd7c9309ce3c?placeholderIfAbsent=true&apiKey=38ba977d7ba34b14bb717fb2f7e29757" alt="" />
                   <SortText>Sắp xếp</SortText>
                 </SortOption>
-              </CopyActions>
+              </CopyActions> */}
             </CopyControls>
-          </CopyOptions>
+        </OptionColumn>
+        <OptionColumn>
+          <CopyTitle>Print Copies</CopyTitle>
+        <PrintOrderOptions/>
         </OptionColumn>
       </OptionsContent>
+      <OptionsContent><PagesPerSheet/></OptionsContent>
     </OptionsWrapper>
   );
 }
 
 const OptionsWrapper = styled.section`
   display: flex;
-  margin-top: 5px;
-  width: 100%;
   flex-direction: column;
+  gap: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 100%;
+
   @media (max-width: 991px) {
     max-width: 100%;
-    margin-top: 8px;
+    padding: 15px;
   }
 `;
 
@@ -66,6 +71,25 @@ const OptionsTabs = styled.div`
     max-width: 100%;
   }
 `;
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  flex-shrink: 0; /* Ngăn không cho icon bị thu nhỏ khi container nhỏ lại */
+`;
+
+const Icon = styled.img`
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+`;
+
+const OptionText = styled.span`
+  color: #000;
+  font: 400 20px "Roboto", sans-serif;
+`;
+
 
 const TabButton = styled.button`
   display: flex;
@@ -93,11 +117,10 @@ const TabText = styled.span`
 `;
 
 const OptionsContent = styled.div`
-  margin-top: 18px;
-  width: 533px;
-  max-width: 100%;
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 90px;
+  width: 100%; /* Đảm bảo chiếm hết chiều rộng của container */
   @media (max-width: 991px) {
     flex-direction: column;
     align-items: stretch;
@@ -109,7 +132,7 @@ const OptionColumn = styled.div`
   display: flex;
   flex-direction: column;
   line-height: normal;
-  width: 39%;
+  width: 100%;
   margin-left: 0px;
   @media (max-width: 991px) {
     width: 100%;
@@ -118,34 +141,30 @@ const OptionColumn = styled.div`
 
 const OptionGroup = styled.div`
   display: flex;
-  margin-top: 63px;
   width: 100%;
   flex-direction: column;
-  color: rgba(0, 0, 0, 1);
-  font: 400 14px/1 Roboto, sans-serif;
+  font: 400 20px/1 Roboto, sans-serif;
   @media (max-width: 991px) {
     margin-top: 40px;
   }
 `;
 
-const RadioOption = styled.label`
-  align-self: center;
-  display: flex;
-  width: 87px;
-  gap: 11px;
-  cursor: pointer;
-`;
+// const RadioOption = styled.label`
+//   align-self: center;
+//   display: flex;
+//   width: 87px;
+//   gap: 11px;
+//   cursor: pointer;
+// `;
 
-const RadioIcon = styled.img`
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 20px;
-`;
+// const RadioIcon = styled.img`
+//   aspect-ratio: 1;
+//   object-fit: contain;
+//   object-position: center;
+//   width: 20px;
+// `;
 
-const OptionText = styled.span`
-  color: rgba(0, 0, 0, 1);
-`;
+
 
 const Placeholder = styled.div`
   border-radius: 5px;
@@ -173,12 +192,19 @@ const CopyTitle = styled.h3`
 
 const CopyControls = styled.div`
   display: flex;
-  margin-top: 24px;
+  flex-direction: column;
   align-items: start;
   gap: 20px;
   font-family: Roboto, sans-serif;
 `;
-
+const InputField = styled.input`
+  padding: 8px 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  max-height: 28px;
+  max-width: 70px;
+  font: 400 24px "Roboto", sans-serif;
+`;
 const CopyCount = styled.div`
   display: flex;
   margin-top: 5px;
@@ -244,5 +270,132 @@ const SortIcon = styled.img`
 const SortText = styled.span`
   color: rgba(0, 0, 0, 1);
 `;
+const PrintRangeOptions = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+  const [customRange, setCustomRange] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    console.log("Người dùng chọn:", event.target.value);
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setCustomRange(value);
+
+    // Kiểm tra giá trị đầu vào nếu cần
+    const regex = /^(\d+(-\d+)?)(,\d+(-\d+)?)*$/; // Định dạng: "1-3,5,7-9"
+    if (regex.test(value) || value === "") {
+      console.log("Custom range hợp lệ:", value);
+    } else {
+      console.log("Custom range không hợp lệ!");
+    }
+  };
+
+  return (
+    <OptionGroup>
+      <RadioOption
+        
+          name="pageRange"
+          value="all"
+          checked={selectedOption === "all"}
+          onChange={handleOptionChange}
+        >
+        Tất cả
+      </RadioOption>
+
+      <RadioOption
+          name="pageRange"
+          value="current"
+          checked={selectedOption === "current"}
+          onChange={handleOptionChange}
+      >
+        Chỉ trang này
+      </RadioOption>
+
+      <RadioOption
+        type="radio"
+        name="pageRange"
+        value="custom"
+        checked={selectedOption === "custom"}
+        onChange={handleOptionChange}
+      >
+        Tùy chỉnh
+      </RadioOption>
+      <CustomInputField
+          type="text"
+          disabled={selectedOption !== "custom"}
+          placeholder="Ex: 1-3, 10-20,..."
+          value={customRange}
+          onChange={handleInputChange}
+        />
+    </OptionGroup>
+  );
+};
+const CustomInputField = styled(InputField)`
+  width: 250px; /* Tăng độ dài thêm */
+  max-width: 300px; /* Đảm bảo không quá dài */
+`;
+
+const PrintOrderOptions = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    console.log("Người dùng chọn:", event.target.value);
+  };
+
+  return (
+    <OptionGroup>
+      <RadioOption
+        name="pageOrder"
+        value="collate"
+        checked={selectedOption === "collate"}
+        onChange={handleOptionChange}
+      >
+        Collate
+      </RadioOption>
+
+      <RadioOption
+        name="pageOrder"
+        value="uncollate"
+        checked={selectedOption === "uncollate"}
+        onChange={handleOptionChange}
+      >
+        Uncollate
+      
+      </RadioOption>
+
+
+    </OptionGroup>
+  );
+};
+const PagesPerSheet = () => {
+  const [selectedOption, setSelectedOption] = useState("One");
+
+  const handleSelect = (selected) => {
+    setSelectedOption(selected);
+    console.log("Người dùng chọn:", selected);
+  };
+
+  return (
+    <div>
+      <label style={{ fontSize: "24px" }} htmlFor="pagespersheet">
+        Pages Per Sheet:
+      </label>
+      <Dropdown onSelect={handleSelect}>
+      <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-pagepersheet">
+          {selectedOption}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="One">One</Dropdown.Item>
+          <Dropdown.Item eventKey="Two">Two</Dropdown.Item>
+          <Dropdown.Item eventKey="Four">Four</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
+  );
+};
+
 
 export default PrintOptions;

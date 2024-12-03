@@ -2,25 +2,56 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import styled from "styled-components";
 
-// Reusable container component
-function ReusableContainer({ children, className, style }) {
+function ReusableContainer({ children, className, style, onClose }) {
   return (
-    <StyledContainer className={className} style={style}>
-      {children}
-    </StyledContainer>
+    <ModalOverlay>
+      <StyledContainer className={className} style={style}>
+        {/* <CloseButton onClick={onClose}>×</CloseButton> */}
+        {children}
+      </StyledContainer>
+    </ModalOverlay>
   );
 }
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's above other elements */
+`;
+
 const StyledContainer = styled(Container)`
-  background-color: rgba(128, 156, 172, 0.8); /* Màu nền giống như hình mẫu */
-  border-radius: 10px; /* Bo tròn các góc */
-  max-width: 900px;
-  max-height: 650px;
-  margin: o auto;
-  padding: 0px 0px 0px; /* Khoảng cách bên trong */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-  @media (max-width: 991px) {
-    padding: 20px 15px; /* Thêm padding nhỏ hơn cho màn hình nhỏ */
+  background-color: rgba(128, 156, 172, 0.9); /* Background color */
+  border-radius: 10px; /* Rounded corners */
+  max-width: 850px;
+  max-height: 700px;
+  width: 100%;
+  margin: auto;
+  padding: 20px; /* Padding inside */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: relative; /* For close button positioning */
+  overflow-y: auto; /* Add scrolling for large content */
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
   }
 `;
 
