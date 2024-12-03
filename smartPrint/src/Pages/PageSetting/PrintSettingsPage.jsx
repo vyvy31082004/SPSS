@@ -5,23 +5,29 @@ import PrinterSelection from "./PrinterSelection";
 import PrintContainer from "../../Components/container";
 import PrintOptions from "./PrintOptions";
 import PageSettings from "./PageSettings";
+import Button from "../../Button/Button";
 import PrintActions from "./PrintActions";
+import { Row } from "react-bootstrap";
 
 function PrintSettingsPage() {
   return (
-    <PageWrapper>
+    // <PageWrapper>
       <PrintContainer>
         <Header title="CÀI ĐẶT" />
         <MainContent>
           <PrinterSelection />
-          {/* <OptionsContainer>
+          <OptionsContainer>
             <PrintOptions />
-            <PageSettings />
-            <PrintActions />
-          </OptionsContainer> */}
+            {/* <PageSettings /> */}
+            {/* <PrintActions /> */}
+          </OptionsContainer>
+          <ButtonContainer>
+            <Button title="Next" />
+            <Button title="Back" />
+          </ButtonContainer>
         </MainContent>
       </PrintContainer>
-    </PageWrapper>
+    // </PageWrapper>
   );
 }
 
@@ -31,7 +37,6 @@ const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f4f8; /* Light background */
   min-height: 100vh; /* Full viewport height */
   padding: 20px;
 `;
@@ -53,9 +58,8 @@ const ContentContainer = styled.main`
 
 const MainContent = styled.div`
   display: flex;
-  margin-top: 20px;
+  flex-direction: column;
   width: 100%;
-  padding: 0 20px;
   @media (max-width: 991px) {
     padding: 0 10px;
   }
@@ -66,10 +70,20 @@ const OptionsContainer = styled.div`
   flex-direction: column;
   gap: 20px; /* Space between options */
   width: 100%;
-  margin-top: 20px;
   @media (max-width: 991px) {
     gap: 15px;
   }
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center; /* Center buttons vertically */
+  gap: 16px; /* Space between buttons */
+  position: relative; /* Position at the bottom right */
+  bottom: 16px;
+  right: 16px;
 `;
 
 export default PrintSettingsPage;
