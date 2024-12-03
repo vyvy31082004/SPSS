@@ -25,7 +25,7 @@ export default function FileUploader ()  {
                     <div className="d-flex justify-content-between mb-2"> 
                         <h5>Danh sách tệp đã tải lên</h5>
                         <div className='btn btn-secondary'>
-                            <i class="bi bi-cloud-arrow-up pe-2"></i>
+                            <i className="bi bi-cloud-arrow-up pe-2"></i>
                             Tải tệp
                         </div>
                         
