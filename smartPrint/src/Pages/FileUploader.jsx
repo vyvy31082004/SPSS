@@ -14,7 +14,6 @@ export default function FileUploader ()  {
     const [showSecondModal, setShowSecondModal] = useState(null);
     const handleCloseSecondModal = () => setShowSecondModal(false);
     const handleShowSecondModal = () => setShowSecondModal(true);
-    
     return (
             <div className="d-flex flex-column p-4">
                 <div className="d-flex justify-content-between align-items-center mb-2">
