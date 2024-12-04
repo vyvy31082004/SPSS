@@ -3,31 +3,37 @@ import styled from "styled-components";
 import Header from "../../Components/header";
 import PrinterSelection from "./PrinterSelection";
 import PrintContainer from "../../Components/container";
+import { usePrintSettings } from "./PrintSettingContext";
 import PrintOptions from "./PrintOptions";
 import PageSettings from "./PageSettings";
 import Button from "../../Button/Button";
+import Modal from 'react-bootstrap/Modal';
 import PrintActions from "./PrintActions";
 import { Row } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
+
 
 function PrintSettingsPage() {
+
+  const { printSettings } = usePrintSettings();
+  const navigate = useNavigate();
+
+  console.log("oitroioi", printSettings);
+
   return (
-    // <PageWrapper>
-      <PrintContainer>
-        <Header title="CÀI ĐẶT" />
-        <MainContent>
-          <PrinterSelection />
-          <OptionsContainer>
-            <PrintOptions />
-            {/* <PageSettings /> */}
-            {/* <PrintActions /> */}
-          </OptionsContainer>
-          <ButtonContainer>
-            <Button title="Next" />
-            <Button title="Back" />
-          </ButtonContainer>
-        </MainContent>
-      </PrintContainer>
-    // </PageWrapper>
+    <PrintContainer>
+      <Header title="CÀI ĐẶT" />
+      <MainContent>
+        <PrinterSelection />
+        <OptionsContainer>
+          <PrintOptions />
+        </OptionsContainer>
+        <ButtonContainer>
+          <Button title="Next" />
+          <Button title="Back" onClick={() => navigate(-1)} />
+        </ButtonContainer>
+      </MainContent>
+    </PrintContainer>
   );
 }
 

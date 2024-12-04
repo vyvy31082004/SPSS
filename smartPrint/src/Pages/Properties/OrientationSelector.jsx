@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown'
-const OrientationSelector = () => {
+const OrientationSelector = ({ onSelectOption }) => {
   const [selectedOption, setSelectedOption] = useState('Select');
-  
+
   const handleSelect = (eventKey) => {
-    setSelectedOption(eventKey);}
+    setSelectedOption(eventKey);
+    if (onSelectOption) {
+      onSelectOption(eventKey); // Gửi giá trị lên cha
+    }
+  };
   return (
     <SelectorContainer>
       <Dropdown onSelect={handleSelect}>

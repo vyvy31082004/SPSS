@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
+import PrintSettingsPage from './PageSetting/PrintSettingsPage';
 import PrintPropertiesPage from './Properties/PrintPropertiesPage'
 import  PrinterList from './SelectPrinter/PrinterSection'
 export default function FileUploader ()  {
@@ -11,6 +12,10 @@ export default function FileUploader ()  {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    // const handleShow = () => {
+    //     navigate("/Printpagesetting");
+    //   };
+    
     const [showSecondModal, setShowSecondModal] = useState(null);
     const handleCloseSecondModal = () => setShowSecondModal(false);
     const handleShowSecondModal = () => setShowSecondModal(true);
@@ -73,7 +78,13 @@ export default function FileUploader ()  {
                 </section>
                 <div className="d-flex justify-content-end mb-2"> 
                     <div  onClick={handleShow}  className='btn btn-secondary'>Tiếp theo</div>
-                                <Modal
+                        <Modal show={show}
+                                    onHide={handleClose}
+                                    backdrop="static"
+                                    keyboard={false}>
+                            <PrintSettingsPage/>
+                        </Modal>
+                                {/* <Modal
                                     show={show}
                                     onHide={handleClose}
                                     backdrop="static"
@@ -91,11 +102,11 @@ export default function FileUploader ()  {
                                 </Button>
                                 <Button onClick={() => { handleClose(); handleShowSecondModal(); }} className="Next"  >Tiếp theo</Button>
                                 </Modal.Footer>
-                            </Modal>
+                            </Modal> */}
 
                             {/* Second Modal */}
 
-                            <Modal
+                            {/* <Modal
                                 show={showSecondModal}
                                 onHide={handleCloseSecondModal}
                                 backdrop="static"
@@ -112,7 +123,7 @@ export default function FileUploader ()  {
                                     </Button>
                                     <Button  className="Next"  >Tiếp theo</Button>
                                 </Modal.Footer>
-                            </Modal>
+                            </Modal> */}
 
 
 
