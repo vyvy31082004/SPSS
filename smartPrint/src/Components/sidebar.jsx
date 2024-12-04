@@ -18,7 +18,7 @@ export default function Sidebar(props) {
 
         <div  className='d-flex'>
             <div className="sidebar">
-                <Navbar className="flex-column " style={{ height: '100vh', width: '200px', backgroundColor: '#D9D9D9' }}>
+                <Navbar className="flex-column " style={{ height: '100vh', width: '205px', backgroundColor: '#D9D9D9' }}>
                     <div className='' onClick={()=>{navigate('/Home')}}>
                         <img
                             src= "src\assets\logo.png"// Replace with your image path or URL
@@ -30,13 +30,19 @@ export default function Sidebar(props) {
                         <Nav.Item>
                             <Nav.Link className='p-2' onClick={()=>{navigate('/PrintLog')}}>
                             <i className="bi bi-clock-history pe-2"></i>
-                            Lịch sử in
+                                Lịch sử in
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className='p-2' onClick={()=>{navigate('/Print')}}>
                                 <i className="bi bi-printer-fill pe-2"></i>
                                 In
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link className='p-2' onClick={()=>{navigate('/')}}>
+                                <i class="bi bi-box-arrow-left pe-2"></i>
+                                Đăng xuất
                             </Nav.Link>
                         </Nav.Item>
                     </Nav>
