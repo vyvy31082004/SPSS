@@ -88,7 +88,7 @@ const handleSelectFile = (fileId, fileName) => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleFileClick(file.fileName)}>
                   <td>{file.fileName}</td>
-                  <td>10</td> {/* Giá trị giả lập */}
+                  <td>{file.pageSize}</td> {/* Giá trị giả lập */}
                   <td>{(file.fileSize / 1024).toFixed(2)} KB</td>
                   <td>{file.fileType}</td>
                   <td>
