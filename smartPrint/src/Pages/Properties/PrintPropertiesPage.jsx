@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'; // Import hook useNavigate
 import PageSizeSelector from './PageSizeSelector';
+import { usePrintSettings } from '../PageSetting/PrintSettingContext';
 import Button from '../../Button/Button';
 import Header from "../../Components/header";
 import OrientationSelector from './OrientationSelector';
@@ -9,21 +10,63 @@ import ColorModeSelector from './ColorModeSelector';
 import PrintModeSelector from './PrintModeSelector';
 import ReusableContainer from '../../Components/container';
 
-const PrintPropertiesPage = () => {
+const PrintPropertiesPage = ({onClose}) => {
   // Hàm xử lý khi nhấn nút "Close"
+
   const navigate = useNavigate(); // Khởi tạo useNavigate để điều hướng
+  const { printSettings, setPrintSettings } = usePrintSettings();
+  const pagesize = printSettings.pagesize;
+  const pageorien = printSettings.pageorien;
+  const colormode = printSettings.colormode;
+  const printmode = printSettings.printmode;
+
+  
+
 
   // Hàm xử lý khi nhấn nút "Close"
-  const handleClose = () => {
-    console.log("Close button clicked!");
-    navigate(-1); // Quay lại trang trước đó
-  };
+  // Hàm xử lý khi nhấn nút "Close"
+const handleClose = () => {
+  console.log("Đã xác định thuộc tính:", printSettings);
+  navigate("/Printpagesetting", { 
+    state: { 
+      ...printSettings, // Gửi toàn bộ thông tin từ context
+    } 
+  });
+};
 
-  // Hàm xử lý khi nhấn nút "OK"
-  const handleOkClick = () => {
-    console.log("OK button clicked!");
-    // Thêm logic lưu, gửi hoặc tiếp tục tại đây
-  };
+// Hàm xử lý cập nhật từng giá trị
+const handlePageSize = (value) => {
+  setPrintSettings((prev) => ({
+    ...prev,
+    pagesize: value,
+  }));
+  console.log('Pagesize selected:', value);
+};
+
+const handlePageOrien = (value) => {
+  setPrintSettings((prev) => ({
+    ...prev,
+    pageorien: value,
+  }));
+  console.log('Page Orien selected:', value);
+};
+
+const handleColorMode = (value) => {
+  setPrintSettings((prev) => ({
+    ...prev,
+    colormode: value,
+  }));
+  console.log('Color selected:', value);
+};
+
+const handlePrintMode = (value) => {
+  setPrintSettings((prev) => ({
+    ...prev,
+    printmode: value,
+  }));
+  console.log('Print Mode selected:', value);
+};
+
 
   return (
     <ReusableContainer>
@@ -32,21 +75,21 @@ const PrintPropertiesPage = () => {
         <ContentRow>
         <PageSizeSection>
         <SectionTitle>Định dạng</SectionTitle>
-          <PageSizeSelector />
+          <PageSizeSelector onSelectOption={handlePageSize} />
         </PageSizeSection>
         <OrientationSection>
           <SectionTitle>Hướng</SectionTitle>
-          <OrientationSelector />
+          <OrientationSelector onSelectOption={handlePageOrien} />
         </OrientationSection>
         </ContentRow>
         <ContentRow>
         <ColorModeSection>
           <SectionTitle>Màu sắc</SectionTitle>
-          <ColorModeSelector />
+          <ColorModeSelector onSelectOption={handleColorMode} />
         </ColorModeSection>
         <PrintModeSection>
           <SectionTitle>Chế độ in</SectionTitle>
-          <PrintModeSelector />
+          <PrintModeSelector onSelectOption={handlePrintMode} />
         </PrintModeSection>
         </ContentRow>
 
@@ -54,8 +97,8 @@ const PrintPropertiesPage = () => {
 
       {/* Khu vực nút hành động */}
       <ActionButtons>
-        <Button title="Close" onClick={handleClose}>Close</Button>
-        <Button title="OK" onClick={handleOkClick}>OK</Button>
+        <Button title="Close" onClick={onClose}/>
+        {/* <Button title="OK" onClick={handleOkClick}>OK</Button> */}
       </ActionButtons>
     </ReusableContainer>
   );
