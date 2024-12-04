@@ -104,7 +104,7 @@ app.post('/files/:id/select', async (req, res) => {
    // Đặt tất cả file isSelected = false
    await File.updateMany({}, { $set: { isSelected: false } });
 
-   // Đặt isSelected = true cho file được chọn
+   // Đặt isSelected = true đã chọn
    const selectedFile = await File.findByIdAndUpdate(
      fileId,
      { isSelected: true },
