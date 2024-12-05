@@ -70,6 +70,7 @@ const printSettingsSchema = new mongoose.Schema({
   selectedFile: Object,
   selectedPrinter: Object,
   selectedPrinterName: Object,
+  selectedPrinterID:Object,
   pagesize: String,
   pageorien: String,
   colormode: String,

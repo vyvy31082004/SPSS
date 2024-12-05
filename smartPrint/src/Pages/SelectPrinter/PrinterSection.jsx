@@ -94,6 +94,7 @@ const PrinterList = ({ onClose }) => {
       setPrintSettings((prev) => ({
         ...prev,
         selectedPrinter: printerId,
+        selectedPrinterID: selected.id,
         selectedPrinterName: selected.name, // Lưu thêm tên máy in
       }));
     }
