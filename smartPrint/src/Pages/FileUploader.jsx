@@ -14,7 +14,9 @@ const  FileUploader = () => {
   const [show, setShow] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
 
-  // Load danh sách tệp từ backend khi component mount
+
+// Load danh sách tệp từ backend khi component mount//
+
   useEffect(() => {
     axios
       .get('http://localhost:5000/files') // API backend để lấy danh sách file
