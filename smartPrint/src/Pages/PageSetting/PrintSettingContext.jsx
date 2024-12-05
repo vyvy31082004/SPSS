@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const PrintSettingsContext = createContext();
 
 const PrintSettingsProvider = ({ children }) => {
   const [printSettings, setPrintSettings] = useState({
-    selectedFile: null, // File được chọn
-    selectedPrinter: null, // Máy in được chọn
+    selectedFile: null,
+    selectedPrinter: null,
+    selectedPrinterName:null,
     pagesize: null,
     pageorien: null,
     colormode: null,
@@ -16,58 +18,37 @@ const PrintSettingsProvider = ({ children }) => {
     papersheet: null,
   });
 
-  // Hàm cập nhật file được chọn
-  const updateSelectedFile = (file) => {
-    if (!file) {
-      console.error("Invalid file selected.");
-      return;
+  // Lưu dữ liệu vào localStorage khi có sự thay đổi trong printSettings
+  useEffect(() => {
+    localStorage.setItem('printSettings', JSON.stringify(printSettings));
+  }, [printSettings]);
+
+  // Hàm tải dữ liệu từ localStorage vào state khi ứng dụng khởi động
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('printSettings');
+    if (savedSettings) {
+      setPrintSettings(JSON.parse(savedSettings));
     }
+  }, []);
 
-    setPrintSettings((prevSettings) => ({
-      ...prevSettings,
-      selectedFile: {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      },
-    }));
-  };
-
-  // Hàm cập nhật máy in được chọn
-  const updateSelectedPrinter = (printer) => {
-    if (!printer || !printer.name) {
-      console.error("Invalid printer selected.");
-      return;
+  // Hàm gửi dữ liệu lên server và lưu vào MongoDB
+  const savePrintSettings = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/print-settings", printSettings);
+      console.log("Settings saved:", response.data);
+    } catch (error) {
+      console.error("Error saving settings:", error);
     }
-
-    setPrintSettings((prevSettings) => ({
-      ...prevSettings,
-      selectedPrinter: {
-        name: printer.name,
-        status: printer.status,
-        location: printer.location,
-      },
-    }));
   };
 
   return (
-    <PrintSettingsContext.Provider
-      value={{
-        printSettings,
-        setPrintSettings,
-        updateSelectedFile,
-        updateSelectedPrinter,
-      }}
-    >
+    <PrintSettingsContext.Provider value={{ printSettings, setPrintSettings, savePrintSettings }}>
       {children}
     </PrintSettingsContext.Provider>
   );
 };
 
-// Hook tùy chỉnh để sử dụng PrintSettingsContext
 const usePrintSettings = () => useContext(PrintSettingsContext);
-
-
 
 export { PrintSettingsProvider, usePrintSettings };
 export default PrintSettingsContext;

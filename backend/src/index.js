@@ -66,6 +66,22 @@ const seedPrinters = async () => {
 
 seedPrinters();
 
+const printSettingsSchema = new mongoose.Schema({
+  selectedFile: Object,
+  selectedPrinter: Object,
+  selectedPrinterName: Object,
+  pagesize: String,
+  pageorien: String,
+  colormode: String,
+  printmode: String,
+  pagerange: String,
+  printcopies: String,
+  printcollate: String,
+  papersheet: String,
+});
+
+const PrintSettings = mongoose.model('PrintSettings', printSettingsSchema);
+
 
 // Multer cấu hình lưu file
 const storage = multer.diskStorage({
@@ -204,6 +220,17 @@ app.get('/printers/selected', async (req, res) => {
     res.json(selectedPrinter);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching selected printer!', error });
+  }
+});
+
+// API để lưu cài đặt in
+app.post('/api/print-settings', async (req, res) => {
+  try {
+    const printSettings = new PrintSettings(req.body);
+    await printSettings.save();
+    res.status(201).send(printSettings);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
