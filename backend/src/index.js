@@ -88,7 +88,7 @@ app.get('/files', async (req, res) => {
   }
 });
 
-
+// API chọn file
 app.post('/files/:id/select', async (req, res) => {
   try {
   const fileId = req.params.id;
