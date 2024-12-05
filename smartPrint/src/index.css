@@ -1,5 +1,9 @@
 body{
         background-color:#7c94a4;
+        
+}
+.homepage-body {
+        background-color: #f7f7f7;
 }
 .btn-primary {
         background-color: #7c94a4 !important;
@@ -8,6 +12,10 @@ body{
  
         
     }
+.submit{
+        background-color: #19599A !important;
+        border-color: #7c94a4 !important;
+}
 .Close{
         background-color: #5683a5 !important; /* Đổi màu theo ý muốn */
         border-color: #5085ae !important;
@@ -16,7 +24,16 @@ body{
         background-color: #203e55 !important; /* Đổi màu theo ý muốn */
         
 }
-
+.hero-section {
+        background-color: #4a90e2;
+        color: white;
+        padding: 60px 0;
+}
+      
+      footer {
+        background-color: #f1f1f1;
+        padding: 20px 0;
+}
 .btn-primary:hover {
         background-color: #5a6f7f !important; /* Đổi màu theo ý muốn */
         border-color: #5a6f7f !important;
@@ -128,4 +145,7 @@ body{
         font-size:33px;
         margin-left: -7px; /* Di chuyển sang bên trái */
         margin-top: -80x;
+}
+.loginpage{
+        background-color: white
 }

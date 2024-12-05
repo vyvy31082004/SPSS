@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown'
-const ColorModeSelector = () => {
+const ColorModeSelector = ({ onSelectOption }) => {
   const [selectedOption, setSelectedOption] = useState('Select');
-  
+
   const handleSelect = (eventKey) => {
     setSelectedOption(eventKey);
+    if (onSelectOption) {
+      onSelectOption(eventKey); // Gửi giá trị lên cha
+    }
   };
   return (
     <SelectorContainer>

@@ -15,7 +15,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 mongoose.connect('mongodb://127.0.0.1:27017/fileuploads', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => console.log('Connected to MongoDB_fileupload'))
+}).then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Mongoose Schema
@@ -78,18 +78,17 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-
 // API lấy danh sách file
 app.get('/files', async (req, res) => {
   try {
-  const files = await File.find();
-  res.json(files);
+    const files = await File.find();
+    res.json(files);
   } catch (error) {
-  res.status(500).json({ message: 'Error fetching files!', error });
+    res.status(500).json({ message: 'Error fetching files!', error });
   }
 });
 
-//Api chọn file
+// API chọn file
 app.post('/files/:id/select', async (req, res) => {
   try {
   const fileId = req.params.id;

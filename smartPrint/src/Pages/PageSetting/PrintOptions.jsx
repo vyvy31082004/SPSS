@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import RadioOption from "../../Components/RadioOption";
-import { Dropdown } from "react-bootstrap";
+import {usePrintSettings} from "./PrintSettingContext";
+import Dropdown from 'react-bootstrap/Dropdown'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Form } from "react-bootstrap";
@@ -25,9 +26,7 @@ function PrintOptions() {
             />
             <OptionText>Số lượng: </OptionText>
             </IconWrapper>
-            
-            
-            <InputField placeholder="1" type="number"></InputField>
+            <PrintCopiesInput/>
             
             
               {/* <CopyActions>
@@ -202,7 +201,7 @@ const InputField = styled.input`
   border: 1px solid #ccc;
   border-radius: 10px;
   max-height: 28px;
-  max-width: 70px;
+  max-width: 100px;
   font: 400 24px "Roboto", sans-serif;
 `;
 const CopyCount = styled.div`
@@ -270,23 +269,47 @@ const SortIcon = styled.img`
 const SortText = styled.span`
   color: rgba(0, 0, 0, 1);
 `;
+
+const CustomInputField = styled(InputField)`
+  width: 250px; /* Tăng độ dài thêm */
+  max-width: 300px; /* Đảm bảo không quá dài */
+`;
+
+
 const PrintRangeOptions = () => {
+  const { printSettings, setPrintSettings } = usePrintSettings();
   const [selectedOption, setSelectedOption] = useState("");
   const [customRange, setCustomRange] = useState("");
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    console.log("Người dùng chọn:", event.target.value);
+    const value = event.target.value;
+    setSelectedOption(value);
+
+    // Update the context with the selected option
+    setPrintSettings((prev) => ({
+      ...prev,
+      pagerange: value === "custom" ? customRange : value,
+    }));
+
+    console.log("Người dùng chọn:", value);
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     setCustomRange(value);
 
-    // Kiểm tra giá trị đầu vào nếu cần
-    const regex = /^(\d+(-\d+)?)(,\d+(-\d+)?)*$/; // Định dạng: "1-3,5,7-9"
+    // Validate input format for custom range
+    const regex = /^(\d+(-\d+)?)(,\d+(-\d+)?)*$/; // Format: "1-3,5,7-9"
     if (regex.test(value) || value === "") {
       console.log("Custom range hợp lệ:", value);
+
+      // Update the context with the custom range if "custom" is selected
+      if (selectedOption === "custom") {
+        setPrintSettings((prev) => ({
+          ...prev,
+          pagerange: value,
+        }));
+      }
     } else {
       console.log("Custom range không hợp lệ!");
     }
@@ -295,26 +318,24 @@ const PrintRangeOptions = () => {
   return (
     <OptionGroup>
       <RadioOption
-        
-          name="pageRange"
-          value="all"
-          checked={selectedOption === "all"}
-          onChange={handleOptionChange}
-        >
+        name="pageRange"
+        value="all"
+        checked={selectedOption === "all"}
+        onChange={handleOptionChange}
+      >
         Tất cả
       </RadioOption>
 
-      <RadioOption
-          name="pageRange"
-          value="current"
-          checked={selectedOption === "current"}
-          onChange={handleOptionChange}
+      {/* <RadioOption
+        name="pageRange"
+        value="current"
+        checked={selectedOption === "current"}
+        onChange={handleOptionChange}
       >
         Chỉ trang này
-      </RadioOption>
+      </RadioOption> */}
 
       <RadioOption
-        type="radio"
         name="pageRange"
         value="custom"
         checked={selectedOption === "custom"}
@@ -322,27 +343,61 @@ const PrintRangeOptions = () => {
       >
         Tùy chỉnh
       </RadioOption>
+
       <CustomInputField
-          type="text"
-          disabled={selectedOption !== "custom"}
-          placeholder="Ex: 1-3, 10-20,..."
-          value={customRange}
-          onChange={handleInputChange}
-        />
+        type="text"
+        disabled={selectedOption !== "custom"}
+        placeholder="Ex: 1-3, 10-20,..."
+        value={customRange}
+        onChange={handleInputChange}
+      />
     </OptionGroup>
   );
 };
-const CustomInputField = styled(InputField)`
-  width: 250px; /* Tăng độ dài thêm */
-  max-width: 300px; /* Đảm bảo không quá dài */
-`;
+const PrintCopiesInput = () => {
+  const { printSettings, setPrintSettings } = usePrintSettings();
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+
+    // Ensure the input is a positive integer
+    if (value >= 1) {
+      setPrintSettings((prev) => ({
+        ...prev,
+        printcopies: parseInt(value, 10), // Update the context with the input value
+      }));
+      console.log("Updated printcopies to:", value);
+    } else {
+      console.log("Invalid value for printcopies:", value);
+    }
+  };
+
+  return (
+    <InputField
+      placeholder="num"
+      type="number"
+      min="1"
+      value={printSettings.printcopies || ""}
+      onChange={handleInputChange}
+    />
+  );
+};
 
 const PrintOrderOptions = () => {
+  const { setPrintSettings } = usePrintSettings();
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    console.log("Người dùng chọn:", event.target.value);
+    const value = event.target.value;
+    setSelectedOption(value);
+
+    // Update the context with the selected option
+    setPrintSettings((prev) => ({
+      ...prev,
+      printcollate: value,
+    }));
+
+    console.log("Người dùng chọn:", value);
   };
 
   return (
@@ -363,18 +418,24 @@ const PrintOrderOptions = () => {
         onChange={handleOptionChange}
       >
         Uncollate
-      
       </RadioOption>
-
-
     </OptionGroup>
   );
 };
+
 const PagesPerSheet = () => {
-  const [selectedOption, setSelectedOption] = useState("One");
+  const { setPrintSettings } = usePrintSettings();
+  const [selectedOption, setSelectedOption] = useState("Select");
 
   const handleSelect = (selected) => {
     setSelectedOption(selected);
+
+    // Update the context with the selected pages per sheet
+    setPrintSettings((prev) => ({
+      ...prev,
+      papersheet: selected,
+    }));
+
     console.log("Người dùng chọn:", selected);
   };
 
@@ -384,7 +445,7 @@ const PagesPerSheet = () => {
         Pages Per Sheet:
       </label>
       <Dropdown onSelect={handleSelect}>
-      <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-pagepersheet">
+        <Dropdown.Toggle className="custom-dropdown-btn" id="dropdown-pagepersheet">
           {selectedOption}
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -396,6 +457,7 @@ const PagesPerSheet = () => {
     </div>
   );
 };
+
 
 
 export default PrintOptions;
