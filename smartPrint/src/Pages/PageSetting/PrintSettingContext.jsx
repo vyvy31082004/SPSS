@@ -4,6 +4,7 @@ const PrintSettingsContext = createContext();
 
 const PrintSettingsProvider = ({ children }) => {
   const [printSettings, setPrintSettings] = useState({
+    selectedFile: null,
     selectedPrinter: null,
     pagesize: null,
     pageorien: null,
