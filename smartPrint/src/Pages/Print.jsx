@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-export default function Print ()  {
+const Print = () =>  {
+    const [files, setFiles] = useState([]);
+    const [selectedFileName, setSelectedFileName] = useState('');
+    useEffect(() => {
+        // Lấy file được chọn
+        axios.get('http://localhost:5000/files/selected')
+          .then((res) => setSelectedFileName(res.data?.fileName || ''))
+          .catch(() => setSelectedFileName('')); // Nếu không có file được chọn
+      }, []);
+
     const navigate=useNavigate();
     //const [currentPages, setCurrentPages] = useState(0);  Trạng thái lưu trữ số trang hiện tại 
     // API get
@@ -23,9 +33,13 @@ export default function Print ()  {
                     <hr />
                     <div style={{minHeight: '200px'}}>
                     <div className="d-flex justify-content-evenly pt-5" >
-                        <div onClick={()=>{navigate('/Print/Upload')}} className="btn btn-primary btn-lg">Chọn tệp</div>
+                        <div onClick={()=>{navigate('/Print/Upload')}} className="btn btn-primary btn-lg">Chọn tệp </div>
+                        <div>{selectedFileName || 'Chưa có tệp nào được chọn'}</div>
                         <div onClick={()=>{navigate('')}} className="btn btn-primary btn-lg">In</div>
                     </div>
+                   
+         
+   
                     </div>
                 </section>
 
@@ -34,3 +48,4 @@ export default function Print ()  {
 
     );
 };
+export default Print;
