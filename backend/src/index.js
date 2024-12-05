@@ -88,7 +88,8 @@ app.get('/files', async (req, res) => {
   res.status(500).json({ message: 'Error fetching files!', error });
   }
 });
-  
+
+//Api chọn file
 app.post('/files/:id/select', async (req, res) => {
   try {
   const fileId = req.params.id;
