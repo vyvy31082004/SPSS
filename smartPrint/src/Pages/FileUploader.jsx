@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PrintSettingsPage from './PageSetting/PrintSettingsPage';
+import { usePrintSettings } from './PageSetting/PrintSettingContext';
 import PrintPropertiesPage from './Properties/PrintPropertiesPage';
 import PrinterList from './SelectPrinter/PrinterSection';
 
@@ -117,9 +121,15 @@ const handleSelectFile = (fileId, fileName) => {
         <button onClick={handleShow} className="btn btn-secondary">
           Tiếp theo
         </button>
+        <Modal show={show}
+                                    onHide={handleClose}
+                                    backdrop="static"
+                                    keyboard={false}>
+                            <PrintSettingsPage/>
+                        </Modal>
 
         {/* Modal 1 */}
-        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+        {/* <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
             <Modal.Title>Thuộc tính</Modal.Title>
           </Modal.Header>
@@ -134,10 +144,10 @@ const handleSelectFile = (fileId, fileName) => {
               Tiếp theo
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
         {/* Modal 2 */}
-        <Modal show={showSecondModal} onHide={handleCloseSecondModal} backdrop="static" keyboard={false}>
+        {/* <Modal show={showSecondModal} onHide={handleCloseSecondModal} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
             <Modal.Title>Chọn máy in</Modal.Title>
           </Modal.Header>
@@ -150,7 +160,7 @@ const handleSelectFile = (fileId, fileName) => {
             </Button>
             <Button className="Next">Tiếp theo</Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
         {/* Nút Trở về */}
         <button onClick={() => navigate('/Print')} className="btn btn-secondary">
