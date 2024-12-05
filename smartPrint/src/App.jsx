@@ -14,7 +14,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Pages/LogIn/LogInPage';
-import Home from './Pages/Home';
+import Home from './Pages/Homepage/Home';
 function App()  {
   const location=useLocation();
   const temp=location.pathname==="/"

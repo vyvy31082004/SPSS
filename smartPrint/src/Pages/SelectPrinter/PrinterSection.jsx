@@ -52,40 +52,37 @@
 // `;
 
 // export default PrinterSection;
-import React, { useState } from 'react';
-import { Table, Form } from 'react-bootstrap';
-import { useNavigate, useLocation } from "react-router-dom"; // Import for navigation
-import Button from '../../Button/Button';
-import PrintContainer from '../../Components/container';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Table, Form } from "react-bootstrap";
+import { usePrintSettings } from "../PageSetting/PrintSettingContext";
+import Button from "../../Button/Button";
+import PrintContainer from "../../Components/container";
 
-const PrinterList = () => {
-  const [selectedPrinter, setSelectedPrinter] = useState();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleClose = () => {
-    console.log("Đã  chọn máy in")
-    // Navigate back with the selected printer data
-    navigate("/Printpagesetting", { state: { selectedPrinter } });
-  };
+const PrinterList = ({ onClose }) => {
+  const { printSettings, setPrintSettings } = usePrintSettings();
+  const selectedPrinter = printSettings.selectedPrinter;
+  const [message, setMessage] = useState("");
 
   const printers = [
-    { id: 'A', name: 'Máy in A', status: 'Sẵn sàng', location: 'B4' },
-    { id: 'B', name: 'Máy in B', status: 'Chưa sẵn sàng', location: 'A4' },
-    { id: 'C', name: 'Máy in C', status: 'Sẵn sàng',location: 'A5' },
-    { id: 'D', name: 'Máy in D', status: 'Chưa sẵn sàng', location: 'H6' },
+    { id: "A", name: "Máy in A", status: "Sẵn sàng", location: "B4", available: "true" },
+    { id: "B", name: "Máy in B", status: "Chưa sẵn sàng", location: "A4", available: "false" },
+    { id: "C", name: "Máy in C", status: "Sẵn sàng", location: "A5", available: "true" },
+    { id: "D", name: "Máy in D", status: "Chưa sẵn sàng", location: "H6", available: "false" },
   ];
-// xử lý việc chọn và bỏ chọn máy in trong một danh sách
-  // const handlePrinterSelect = (printerId) => {
-  //   if (selectedPrinter.includes(printerId)) {
-  //     setSelectedPrinter(selectedPrinter.filter((id) => id !== printerId));
-  //   } else {
-  //     setSelectedPrinter([...selectedPrinter, printerId]);
-  //   }
-  // };
+
   const handlePrinterSelect = (printerId) => {
-    // Cập nhật selectedPrinter với printerId được chọn
-    setSelectedPrinter(printerId);
+    const selected = printers.find((printer) => printer.id === printerId);
+
+    if (selected && selected.available === "false") {
+      setMessage(`Máy in ${selected.name} không sẵn sàng để chọn.`);
+    } else {
+      setMessage(`Máy in ${selected.name} đã được chọn!`);
+      setPrintSettings((prev) => ({
+        ...prev,
+        selectedPrinter: printerId,
+      }));
+    }
   };
 
   return (
@@ -102,35 +99,40 @@ const PrinterList = () => {
         </thead>
         <tbody>
           {printers.map((printer) => (
-            <tr key={printer.id}
-              className={selectedPrinter === printer.id ? 'table-primary' : ''}
-              onClick={() => handlePrinterSelect(printer.id)}
-              >
+            <tr
+              key={printer.id}
+              className={selectedPrinter === printer.id ? "table-primary" : ""}
+            >
               <td>{printer.name}</td>
               <td>{printer.status}</td>
               <td>{printer.location}</td>
               <td>
                 <Form.Check
                   type="radio"
-                  // checked={selectedPrinter.includes(printer.id)}
-                  // onChange={() => handlePrinterSelect(printer.id)}
-                  //checked={selectedPrinter === printer.id}
-                  
-                  name = "printer" //dat name de cho no chung 
-                  id = {`my-${printer.id}`}
+                  name="printer"
+                  id={`printer-${printer.id}`}
+                  disabled={printer.available === "false"}
+                  checked={selectedPrinter === printer.id}
                   onChange={() => handlePrinterSelect(printer.id)}
                 />
-                
               </td>
-              
             </tr>
           ))}
         </tbody>
       </Table>
-      <Button title="Close" onClick={handleClose} />
-     
+      <h4 style={{ color: "black" }}>Message: {message}</h4>
+      <ActionButtons>
+        <Button title="Close" onClick={onClose} />
+      </ActionButtons>
     </PrintContainer>
   );
 };
+
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-top: 20px;
+`;
 
 export default PrinterList;
