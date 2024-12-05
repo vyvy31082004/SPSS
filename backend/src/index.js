@@ -15,7 +15,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 mongoose.connect('mongodb://127.0.0.1:27017/fileuploads', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => console.log('Connected to MongoDB'))
+}).then(() => console.log('Connected to MongoDB_fileuploads'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Mongoose Schema
