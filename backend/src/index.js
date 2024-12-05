@@ -88,16 +88,7 @@ app.get('/files', async (req, res) => {
   }
 });
 
-// API lấy danh sách file
-app.get('/files', async (req, res) => {
-  try {
-  const files = await File.find();
-  res.json(files);
-  } catch (error) {
-  res.status(500).json({ message: 'Error fetching files!', error });
-  }
-});
-  
+
 app.post('/files/:id/select', async (req, res) => {
   try {
   const fileId = req.params.id;
