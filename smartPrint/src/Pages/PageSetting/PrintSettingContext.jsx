@@ -16,6 +16,7 @@ const PrintSettingsProvider = ({ children }) => {
     printcopies: null,
     printcollate: null,
     papersheet: null,
+    totalpage: null,
   });
 
   // Lưu dữ liệu vào localStorage khi có sự thay đổi trong printSettings

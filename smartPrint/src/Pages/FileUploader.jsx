@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Button} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Header from '../Components/header';
 import PrintSettingsPage from './PageSetting/PrintSettingsPage';
 import { usePrintSettings } from './PageSetting/PrintSettingContext';
 import PrintPropertiesPage from './Properties/PrintPropertiesPage';
 import PrinterList from './SelectPrinter/PrinterSection';
 import Pagination from 'react-bootstrap/Pagination';
+
+const SelectButton = styled.button`
+  background-color: ${(props) => (props.$isSelected ? 'green' : 'blue')};
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${(props) => (props.$isSelected ? 'darkgreen' : 'darkblue')};
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
 const  FileUploader = () => {
   const navigate = useNavigate();
   const { printSettings, setPrintSettings } = usePrintSettings();
@@ -16,6 +36,7 @@ const  FileUploader = () => {
   // State
   const [files, setFiles] = useState([]); // Danh sách tệp từ backend
   const [selectedFileName, setSelectedFileName] = useState('');
+  const [message,setMessage] = useState('');
   const [show, setShow] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
   const [currentPagination, setCurrentPagination] = useState(1);  //Trạng thái trang hiện tại
@@ -74,6 +95,11 @@ const handleSelectFile = (fileId, fileName) => {
     .then(() => {
       setPrintSettings(prev => ({ ...prev, selectedFile: fileName })); // Lưu tên file vào printSettings
       setMessage(`Đã chọn tệp: ${fileName}`);
+      setFiles((prevFiles) =>
+        prevFiles.map((file) =>
+          file._id === fileId ? { ...file, isSelected: true } : { ...file, isSelected: false }
+        )
+      );
     })
     .catch((err) => {
       console.error(err);
@@ -82,6 +108,7 @@ const handleSelectFile = (fileId, fileName) => {
 };
 
   return (
+    <div><Header/>
     <div className="d-flex flex-column p-4">
       
       <div className="d-flex justify-content-between align-items-center mb-2">
@@ -114,27 +141,19 @@ const handleSelectFile = (fileId, fileName) => {
               </tr>
             </thead>
             <tbody>
-              { currentItems.map((file,i) => (
-                <tr key={i}
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleFileClick(file.fileName)}>
+            {currentItems.map((file) => (
+                <tr key={file._id}>
                   <td>{file.fileName}</td>
-                  <td>{file.pageSize}</td> 
+                  <td>{file.pageSize}</td>
                   <td>{(file.fileSize / 1024).toFixed(2)} KB</td>
                   <td>{file.fileType}</td>
                   <td>
-                    <button
-                      style={{
-                        backgroundColor: file.isSelected ? 'green' : 'blue',
-                        color: 'white',
-                        border: 'none',
-                        padding: '5px 10px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleSelectFile(file._id, file.fileName)}
-                    >
-                      {file.isSelected ? 'Đã chọn' : 'Chọn'}
-                    </button>
+                  <SelectButton
+  $isSelected={file.isSelected}
+  onClick={() => handleSelectFile(file._id, file.fileName)}
+>
+  {file.isSelected ? 'Đã chọn' : 'Chọn'}
+</SelectButton>
                   </td>
                 </tr>
               ))}
@@ -160,12 +179,15 @@ const handleSelectFile = (fileId, fileName) => {
         <button onClick={handleShow} className="btn btn-secondary">
           Tiếp theo
         </button>
-        <Modal show={show}
-                                    onHide={handleClose}
-                                    backdrop="static"
-                                    keyboard={false}>
-                            <PrintSettingsPage/>
-                        </Modal>
+        <Modal 
+  show={show} 
+  onHide={handleClose} 
+  backdrop="static" 
+  keyboard={false} 
+  animation={false} // Tắt animation để modal mở ngay lập tức
+>
+  <PrintSettingsPage />
+</Modal>
 
         {/* Modal 1 */}
         {/* <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -206,6 +228,7 @@ const handleSelectFile = (fileId, fileName) => {
           Trở về
         </button>
       </div>
+    </div>
     </div>
   );
 }

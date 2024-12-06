@@ -1,8 +1,10 @@
 import React from 'react';
+import Header from '../../Components/header';
 import { Navbar, Container, Row, Col } from 'react-bootstrap';
 
 function HomePage() {
   return (
+    
     <div
       className="homepage"
       style={{
@@ -13,14 +15,15 @@ function HomePage() {
         padding: 0,
       }}
     >
+      <Header title="SPSS"/>
       {/* Header with Navigation */}
-      <Navbar bg="light" expand="lg" style={{ flexShrink: 0, padding: 0 }}>
+      {/* <Navbar bg="light" expand="lg" style={{ flexShrink: 0, padding: 0 }}>
         <Container>
           <Navbar.Brand href="#home">
             <h2>Smart Printing Service</h2>
           </Navbar.Brand>
         </Container>
-      </Navbar>
+      </Navbar> */}
 
       {/* Nội dung chính */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>

@@ -117,11 +117,12 @@ const TabText = styled.span`
 
 const OptionsContent = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 90px;
   width: 100%; /* Đảm bảo chiếm hết chiều rộng của container */
-  @media (max-width: 991px) {
-    flex-direction: column;
+  @media (max-width: 1000px) {
+    flex-direction: row;
     align-items: stretch;
     gap: 0px;
   }
@@ -143,9 +144,6 @@ const OptionGroup = styled.div`
   width: 100%;
   flex-direction: column;
   font: 400 20px/1 Roboto, sans-serif;
-  @media (max-width: 991px) {
-    margin-top: 40px;
-  }
 `;
 
 // const RadioOption = styled.label`
@@ -271,7 +269,7 @@ const SortText = styled.span`
 `;
 
 const CustomInputField = styled(InputField)`
-  width: 250px; /* Tăng độ dài thêm */
+  width: 200px; /* Tăng độ dài thêm */
   max-width: 300px; /* Đảm bảo không quá dài */
 `;
 
@@ -373,13 +371,14 @@ const PrintCopiesInput = () => {
   };
 
   return (
+    <div style={{padding: "10px"}}>
     <InputField
       placeholder="num"
       type="number"
       min="1"
       value={printSettings.printcopies || ""}
       onChange={handleInputChange}
-    />
+    /></div>
   );
 };
 
