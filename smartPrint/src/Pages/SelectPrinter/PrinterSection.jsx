@@ -52,7 +52,7 @@
 // `;
 
 // export default PrinterSection;
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Table, Form } from "react-bootstrap";
 import { usePrintSettings } from "../PageSetting/PrintSettingContext";
@@ -62,25 +62,40 @@ import PrintContainer from "../../Components/container";
 const PrinterList = ({ onClose }) => {
   const { printSettings, setPrintSettings } = usePrintSettings();
   const selectedPrinter = printSettings.selectedPrinter;
+  const [printers, setPrinters] = useState([]);
   const [message, setMessage] = useState("");
 
-  const printers = [
-    { id: "A", name: "Máy in A", status: "Sẵn sàng", location: "B4", available: "true" },
-    { id: "B", name: "Máy in B", status: "Chưa sẵn sàng", location: "A4", available: "false" },
-    { id: "C", name: "Máy in C", status: "Sẵn sàng", location: "A5", available: "true" },
-    { id: "D", name: "Máy in D", status: "Chưa sẵn sàng", location: "H6", available: "false" },
-  ];
+  // Fetch printers from backend
+  useEffect(() => {
+    const fetchPrinters = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/printers"); // Adjust to your backend API endpoint
+        if (response.ok) {
+          const data = await response.json();
+          setPrinters(data); // Set printers data from the backend
+        } else {
+          console.error("Failed to fetch printers");
+        }
+      } catch (error) {
+        console.error("Error fetching printers:", error);
+      }
+    };
+
+    fetchPrinters();
+  }, []);
 
   const handlePrinterSelect = (printerId) => {
-    const selected = printers.find((printer) => printer.id === printerId);
+    const selected = printers.find((printer) => printer._id === printerId);
 
-    if (selected && selected.available === "false") {
+    if (selected && selected.status !== "Sẵn sàng") {
       setMessage(`Máy in ${selected.name} không sẵn sàng để chọn.`);
     } else {
       setMessage(`Máy in ${selected.name} đã được chọn!`);
       setPrintSettings((prev) => ({
         ...prev,
         selectedPrinter: printerId,
+        selectedPrinterID: selected.id,
+        selectedPrinterName: selected.name, // Lưu thêm tên máy in
       }));
     }
   };
@@ -100,8 +115,8 @@ const PrinterList = ({ onClose }) => {
         <tbody>
           {printers.map((printer) => (
             <tr
-              key={printer.id}
-              className={selectedPrinter === printer.id ? "table-primary" : ""}
+              key={printer._id}
+              className={selectedPrinter === printer._id ? "table-primary" : ""}
             >
               <td>{printer.name}</td>
               <td>{printer.status}</td>
@@ -110,17 +125,19 @@ const PrinterList = ({ onClose }) => {
                 <Form.Check
                   type="radio"
                   name="printer"
-                  id={`printer-${printer.id}`}
-                  disabled={printer.available === "false"}
-                  checked={selectedPrinter === printer.id}
-                  onChange={() => handlePrinterSelect(printer.id)}
+                  id={`printer-${printer._id}`}
+                  disabled={printer.status !== "Sẵn sàng"}
+                  checked={selectedPrinter === printer._id}
+                  onChange={() => handlePrinterSelect(printer._id)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <h4 style={{ color: "black" }}>Message: {message}</h4>
+      <h4 style={{ color: "black" }}>
+        Máy in đã chọn: {printSettings.selectedPrinterName || "Chưa chọn"}
+      </h4>
       <ActionButtons>
         <Button title="Close" onClick={onClose} />
       </ActionButtons>
@@ -136,3 +153,5 @@ const ActionButtons = styled.div`
 `;
 
 export default PrinterList;
+
+

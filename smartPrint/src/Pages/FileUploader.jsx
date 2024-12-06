@@ -11,6 +11,7 @@ import PrinterList from './SelectPrinter/PrinterSection';
 
 const  FileUploader = () => {
   const navigate = useNavigate();
+  const { printSettings, setPrintSettings } = usePrintSettings();
 
   // State
   const [files, setFiles] = useState([]); // Danh sách tệp từ backend
@@ -26,6 +27,18 @@ const  FileUploader = () => {
       .get('http://localhost:5000/files') // API backend để lấy danh sách file
       .then((res) => setFiles(res.data))
       .catch((err) => console.error(err));
+
+      const fetchFiles = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/files'); // API backend để lấy danh sách file
+          setFiles(response.data);
+        } catch (err) {
+          console.error(err);
+          setMessage("Lỗi tải danh sách tệp. Vui lòng thử lại sau.");
+        }
+      };
+  
+      fetchFiles();
   }, []);
 
   // Đóng/mở modal
@@ -52,8 +65,14 @@ const  FileUploader = () => {
 //Xử lý chọn file
 const handleSelectFile = (fileId, fileName) => {
   axios.post(`http://localhost:5000/files/${fileId}/select`)
-    .then(() => setSelectedFileName(fileName))
-    .catch((err) => console.error(err));
+    .then(() => {
+      setPrintSettings(prev => ({ ...prev, selectedFile: fileName })); // Lưu tên file vào printSettings
+      setMessage(`Đã chọn tệp: ${fileName}`);
+    })
+    .catch((err) => {
+      console.error(err);
+      setMessage("Lỗi khi chọn tệp. Vui lòng thử lại.");
+    });
 };
 
   return (
