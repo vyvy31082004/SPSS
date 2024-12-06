@@ -6,14 +6,20 @@ import PrinterList from "../SelectPrinter/PrinterSection";
 import PrintPropertiesPage from "../Properties/PrintPropertiesPage";
 
 function PrinterSelection() {
-  const { printSettings } = usePrintSettings();
+  const { printSettings, fetchSelectedPrinter } = usePrintSettings();
   const [showPrinterList, setShowPrinterList] = useState(false);
   const [showPropertiesPage, setShowPropertiesPage] = useState(false);
 
-  const togglePrinterList = () => setShowPrinterList((prev) => !prev);
-  const togglePropertiesPage = () => setShowPropertiesPage((prev) => !prev);
+  const togglePrinterList = () => {
+    setShowPrinterList((prev) => !prev);
 
-  console.log("Đã xác định: ", printSettings);
+    // Làm mới thông tin máy in được chọn sau khi modal đóng
+    if (showPrinterList) {
+      fetchSelectedPrinter();
+    }
+  };
+
+  const togglePropertiesPage = () => setShowPropertiesPage((prev) => !prev);
 
   return (
     <PrinterWrapper>
@@ -47,7 +53,6 @@ function PrinterSelection() {
       </PrinterRow>
 
       {/* Modal for Printer List */}
-      {/* Modal for Printer List */}
       <Modal
         show={showPrinterList}
         onHide={togglePrinterList}
@@ -64,15 +69,14 @@ function PrinterSelection() {
         backdrop="static"
         keyboard={false}
       >
-        <PrintPropertiesPage onClose={togglePropertiesPage}/>
+        <PrintPropertiesPage onClose={togglePropertiesPage} />
       </Modal>
 
       <PrinterRow>
         <h3>Máy in đã chọn:</h3>
-        {printSettings.selectedPrinter ? (
+        {printSettings.selectedPrinter && printSettings.selectedPrinterName  ? (
           <p style={{ fontSize: "24px" }}>
-            {printSettings.selectedPrinter.name} - {printSettings.selectedPrinter.status} (
-            {printSettings.selectedPrinter.location})
+            {printSettings.selectedPrinterName }
           </p>
         ) : (
           <p style={{ fontSize: "24px" }}>Chưa có máy in nào được chọn.</p>

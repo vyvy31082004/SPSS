@@ -15,10 +15,26 @@ import { useNavigate } from 'react-router-dom';
 
 function PrintSettingsPage() {
 
-  const { printSettings } = usePrintSettings();
+  const { printSettings, savePrintSettings } = usePrintSettings();
   const navigate = useNavigate();
 
   console.log("oitroioi", printSettings);
+
+
+  const handlePrint = async () => {
+    try {
+      // Lưu cài đặt in
+      await savePrintSettings();
+      alert("Cài đặt in đã được lưu thành công!");
+
+      // Điều hướng đến trang xác nhận hoặc thực hiện in
+      console.log("Settings:", printSettings); // Kiểm tra cài đặt
+    } catch (error) {
+      console.error("Error while saving print settings:", error);
+      alert("Có lỗi xảy ra khi lưu cài đặt in.");
+    }
+  };
+  
 
   return (
     <PrintContainer>
@@ -29,7 +45,7 @@ function PrintSettingsPage() {
           <PrintOptions />
         </OptionsContainer>
         <ButtonContainer>
-          <Button title="Next" />
+          <Button title="Next" onClick={handlePrint} />
           <Button title="Back" onClick={() => navigate(-1)} />
         </ButtonContainer>
       </MainContent>
