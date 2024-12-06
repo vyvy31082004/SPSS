@@ -51,6 +51,7 @@
 // export default Print;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Header from '../Components/header';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -95,12 +96,14 @@ const Print = () => {
     };
 
     return (
+        <div><Header/>
         <div className="d-flex flex-column p-4">
+            <section className="" style={{ backgroundColor: "white", padding: '24px' }}>
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <h1>IN</h1>
-                <h4>Phan Thao Vy</h4>
+                {/* <h4>Phan Thao Vy</h4> */}
             </div>
-            <section className="" style={{ backgroundColor: "white", padding: '24px' }}>
+            <hr/>
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <h5>TỆP</h5>
                     <h5>Số trang hiện tại: {currentPages}</h5>
@@ -115,6 +118,7 @@ const Print = () => {
                 </div>
             </section>
         </div>
+    </div>
     );
 };
 
