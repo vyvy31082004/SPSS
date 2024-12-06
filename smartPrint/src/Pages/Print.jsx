@@ -18,19 +18,6 @@ const Print = () => {
       .catch(() => setSelectedFileName("")); // Nếu không có file được chọn
   }, []);
 
-  const handlePrint = async () => {
-    try {
-      // Lưu cài đặt in
-      await savePrintSettings();
-      alert("Cài đặt in đã được lưu thành công!");
-
-      // Điều hướng đến trang xác nhận hoặc thực hiện in
-      console.log("Settings:", printSettings); // Kiểm tra cài đặt
-    } catch (error) {
-      console.error("Error while saving print settings:", error);
-      alert("Có lỗi xảy ra khi lưu cài đặt in.");
-    }
-  };
 
   return (
     <div className="d-flex flex-column p-4">
@@ -50,7 +37,7 @@ const Print = () => {
               Chọn tệp
             </div>
             <div>{selectedFileName || "Chưa có tệp nào được chọn"}</div>
-            <div onClick={handlePrint} className="btn btn-primary btn-lg">
+            <div className="btn btn-primary btn-lg">
               In
             </div>
           </div>
