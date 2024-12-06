@@ -41,7 +41,7 @@ export default function Sidebar(props) {
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className='p-2' onClick={()=>{navigate('/')}}>
-                                <i class="bi bi-box-arrow-left pe-2"></i>
+                                <i className="bi bi-box-arrow-left pe-2"></i>
                                 Đăng xuất
                             </Nav.Link>
                         </Nav.Item>

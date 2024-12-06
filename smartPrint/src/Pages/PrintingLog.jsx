@@ -9,7 +9,7 @@ export default function PrintLog ()  {
     const [histories, setHistory] = useState([]);
     const [sortOrder, setSortOrder] = useState('desc'); // Trạng thái sắp xếp
     const [currentPage, setCurrentPage] = useState(1); // Trạng thái trang hiện tại
-    const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+    const itemsPerPage = 3; // Số lượng mục trên mỗi trang
 
     // API get 
     useEffect(() => {

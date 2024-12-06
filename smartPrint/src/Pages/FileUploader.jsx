@@ -8,7 +8,7 @@ import PrintSettingsPage from './PageSetting/PrintSettingsPage';
 import { usePrintSettings } from './PageSetting/PrintSettingContext';
 import PrintPropertiesPage from './Properties/PrintPropertiesPage';
 import PrinterList from './SelectPrinter/PrinterSection';
-
+import Pagination from 'react-bootstrap/Pagination';
 const  FileUploader = () => {
   const navigate = useNavigate();
 
@@ -17,7 +17,12 @@ const  FileUploader = () => {
   const [selectedFileName, setSelectedFileName] = useState('');
   const [show, setShow] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
-
+  const [currentPagination, setCurrentPagination] = useState(1);  //Trạng thái trang hiện tại
+  const limitPerPage = 3; // Số lượng mục trên mỗi trang
+  const indexOfLastItem = currentPagination * limitPerPage;
+  const indexOfFirstItem = indexOfLastItem - limitPerPage;
+  const currentItems = files.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPagination(pageNumber); // Thay đổi trang hiện tại
 
 // Load danh sách tệp từ backend khi component mount//
 
@@ -29,11 +34,12 @@ const  FileUploader = () => {
   }, []);
 
   // Đóng/mở modal
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleCloseSecondModal = () => setShowSecondModal(false);
   const handleShowSecondModal = () => setShowSecondModal(true);
-
+  
   // Xử lý tải tệp lên
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -89,33 +95,45 @@ const handleSelectFile = (fileId, fileName) => {
               </tr>
             </thead>
             <tbody>
-              {files.map((file) => (
-                <tr key={file.id}
+              { currentItems.map((file,i) => (
+                <tr key={i}
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleFileClick(file.fileName)}>
                   <td>{file.fileName}</td>
-                  <td>{file.pageSize}</td> {/* Giá trị giả lập */}
+                  <td>{file.pageSize}</td> 
                   <td>{(file.fileSize / 1024).toFixed(2)} KB</td>
                   <td>{file.fileType}</td>
                   <td>
-                  <button
-                  style={{
-                    backgroundColor: file.isSelected ? 'green' : 'blue',
-                    color: 'white',
-                    border: 'none',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => handleSelectFile(file._id, file.fileName)}
-                >
-                  {file.isSelected ? 'Đã chọn' : 'Chọn'}
-                </button>
-              </td>
+                    <button
+                      style={{
+                        backgroundColor: file.isSelected ? 'green' : 'blue',
+                        color: 'white',
+                        border: 'none',
+                        padding: '5px 10px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleSelectFile(file._id, file.fileName)}
+                    >
+                      {file.isSelected ? 'Đã chọn' : 'Chọn'}
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+         
         </div>
+        <Pagination>
+                    <Pagination.First onClick={() => paginate(1)} />
+                    <Pagination.Prev onClick={() => paginate(currentPagination > 1 ? currentPagination - 1 : 1)} />
+                    {[...Array(Math.ceil(files.length / limitPerPage)).keys()].map(number => (
+                        <Pagination.Item key={number + 1} active={number + 1 === currentPagination} onClick={() => paginate(number + 1)}>
+                            {number + 1}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next onClick={() => paginate(currentPagination < Math.ceil(files.length / limitPerPage) ? currentPagination + 1 : currentPagination)} />
+                    <Pagination.Last onClick={() => paginate(Math.ceil(files.length / limitPerPage))} />
+          </Pagination>
       </section>
 
       {/* Nút Tiếp Theo */}

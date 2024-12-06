@@ -24,6 +24,7 @@ body{
         background-color: #203e55 !important; /* Đổi màu theo ý muốn */
         
 }
+.modal { transition: none; }
 .hero-section {
         background-color: #4a90e2;
         color: white;
