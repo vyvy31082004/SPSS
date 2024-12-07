@@ -40,7 +40,7 @@ const  FileUploader = () => {
   const [show, setShow] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
   const [currentPagination, setCurrentPagination] = useState(1);  //Trạng thái trang hiện tại
-  const limitPerPage = 3; // Số lượng mục trên mỗi trang
+  const limitPerPage = 1; // Số lượng mục trên mỗi trang
   const indexOfLastItem = currentPagination * limitPerPage;
   const indexOfFirstItem = indexOfLastItem - limitPerPage;
   const currentItems = files.slice(indexOfFirstItem, indexOfLastItem);

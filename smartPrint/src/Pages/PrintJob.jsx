@@ -1,10 +1,12 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
 import ReusableContainer from '../Components/container';
 import Header from '../Components/header';
 import { usePrintSettings } from './PageSetting/PrintSettingContext';
 import { Modal, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import AxiosInstance from '../Components/axios';
+import axios from 'axios';
 
 const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
@@ -12,9 +14,80 @@ const PrintJob = ({}) => {
     const [showModal, setShowModal] = useState(false);
     const [progress, setProgress] = useState(0);
     const [isPrinting, setIsPrinting] = useState(false); // Track if printing is in progress
+    const [selectedFile,setselectedFile]=useState({});
+    const [currentPages, setCurrentPages] = useState(() => { 
+        // Tải số trang hiện có từ Local Storage khi khởi động ứng dụng 
+        const savedPages = localStorage.getItem('currentPages'); 
+        return savedPages ? parseInt(savedPages, 10) : 100; // Giả sử sinh viên có 100 trang để in
+    })
+    const [selectedFilePages, setSelectedFilePages] = useState(0); // Số trang của file được chọn
 
+    useEffect(() => {
+      // Kiểm tra xem cờ hiệu có tồn tại không
+      const isInitialRun = localStorage.getItem('isInitialRun');
+      if (!isInitialRun) {
+          // Nếu không có, đặt lại số trang và thiết lập cờ hiệu
+          localStorage.setItem('currentPages', 60);
+          localStorage.setItem('isInitialRun', 'true');
+          setCurrentPages(50);
+      } else {
+          // Nếu có, lấy số trang hiện tại từ Local Storage
+          const savedPages = localStorage.getItem('currentPages');
+          setCurrentPages(savedPages ? parseInt(savedPages, 10) : 100);
+      }
+  
+      // Lấy file được chọn
+      axios.get('http://localhost:5000/files/selected')
+          .then((res) => {
+              setSelectedFileName(res.data?.fileName || '');
+              setselectedFile(res.data);
+              setSelectedFilePages(res.data?.pageSize ?? 0); // Giả sử API trả về số trang của file
+          })
+          .catch(() => {
+              setSelectedFileName('');
+              setSelectedFilePages(0);
+          }); // Nếu không có file được chọn
+      }, []);
+
+      useEffect(() => { 
+        // Lưu số trang hiện có vào Local Storage khi thay đổi 
+        localStorage.setItem('currentPages', currentPages);
+    }, [currentPages]);
+
+    
+    const currentDate=new Date();
+    const [historyData,sethistoryData]=useState({
+        printerId: null,
+        printerName: null,
+        userName: "Phan Thao Vy",
+        fileName: null,
+        pages: null,
+        paperSize: null,
+        fileType: null,
+        printedAt: currentDate
+    });
+ 
     const handlePrint = async () => {
         try {
+          if (selectedFilePages <= currentPages) {
+            setCurrentPages(prevPages => prevPages - selectedFilePages);
+            alert('Xác nhận in!');
+            const getHistoryData = localStorage.getItem('printSettings');
+            const parseData = JSON.parse(getHistoryData);
+            const updatedHistoryData = { ...historyData, fileName: selectedFile.fileName, 
+                pages: selectedFile.pageSize, 
+                paperSize: selectedFile.fileSize, 
+                fileType: selectedFile.fileType, 
+                printerId: parseData.selectedPrinterID, 
+                printerName: parseData.selectedPrinterName };
+            sethistoryData(updatedHistoryData)
+            console.log(updatedHistoryData);
+            const response = AxiosInstance.post("api/print-history/add", updatedHistoryData);
+            if (response.status===201)
+            {console.log("OK")}
+        } else {
+            alert('Không đủ số trang để in!');
+        }
           // Lưu cài đặt in
           await savePrintSettings();
         //   alert("Cài đặt in đã được lưu thành công!");
@@ -195,6 +268,7 @@ const PrintJob = ({}) => {
         
           <button
             onClick={handlePrint}
+            
             style={{
               padding: '10px 20px',
               cursor: 'pointer',
@@ -203,7 +277,7 @@ const PrintJob = ({}) => {
               minWidth: '100px',
             }}
           >
-            In
+            Đồng ý
           </button>
           <button
             onClick= {()=> navigate(-1)}

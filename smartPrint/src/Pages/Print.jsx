@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../Components/header';
@@ -40,7 +39,7 @@ const Print = () => {
         } else {
             // Nếu có, lấy số trang hiện tại từ Local Storage
             const savedPages = localStorage.getItem('currentPages');
-            setCurrentPages(savedPages ? parseInt(savedPages, 10) : 50);
+            setCurrentPages(savedPages ? parseInt(savedPages, 10) : 100);
         }
     
         // Lấy file được chọn
@@ -90,17 +89,6 @@ const Print = () => {
                 printerId: parseData.selectedPrinterID, 
                 printerName: parseData.selectedPrinterName };
             sethistoryData(updatedHistoryData)
-            // sethistoryData(predata =>({...predata, fileName: selectedFile.fileName,
-            //                                 pages: selectedFile.pageSize,
-            //                                 paperSize: selectedFile.fileSize,
-            //                                 fileType: selectedFile.fileType,
-
-            // }));
-         
-            
-            // sethistoryData(predata =>({...predata, printerId: parseData.selectedPrinter, 
-            //                                 printerName: parseData.selectedPrinterName
-            //                             }));
             console.log(updatedHistoryData);
             const response = AxiosInstance.post("api/print-history/add", updatedHistoryData);
             if (response.status===201)
