@@ -113,7 +113,7 @@ const handleSelectFile = (fileId, fileName) => {
       
       <div className="d-flex justify-content-between align-items-center mb-2">
         <h1>CHỌN TỆP</h1>
-        <h4>Phan Thảo Vy</h4>
+      
       </div>
       <section style={{ backgroundColor: 'white', padding: '24px' }}>
         <div className="d-flex justify-content-between mb-2">

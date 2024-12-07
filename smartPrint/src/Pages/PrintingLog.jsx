@@ -49,7 +49,6 @@ export default function PrintLog ()  {
         <div className="d-flex flex-column p-4">
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <h1>LỊCH SỬ IN</h1>
-                <h4>Phan Thao Vy</h4>
             </div>
             <section className="" style={{backgroundColor: "white", padding: '24px'}}>
                 <div className="d-flex justify-content-between mb-2"> 

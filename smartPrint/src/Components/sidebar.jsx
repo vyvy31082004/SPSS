@@ -24,7 +24,7 @@ export default function Sidebar(props) {
                             src= "src\assets\ava.png"// Replace with your image path or URL
                             style={{ width: '100px', height: '100px', marginBottom: '10px' }}
                         />
-                        <h5 style={{textAlign: 'center' }}>Menu</h5>
+                        <h5 style={{textAlign: 'center' }}>Thảo Vy</h5>
                     </div>
                     <Nav className="flex-column">
                         <Nav.Item>
@@ -43,6 +43,12 @@ export default function Sidebar(props) {
                             <Nav.Link className='p-2' onClick={()=>{navigate('/Print')}}>
                                 <i className="bi bi-printer-fill pe-2"></i>
                                 In
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link className='p-2' >
+                                <i  className="bi bi-cash-stack pe-2"></i>
+                                Mua giấy
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
