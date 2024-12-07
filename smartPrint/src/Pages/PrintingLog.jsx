@@ -9,12 +9,17 @@ export default function PrintLog ()  {
     const [histories, setHistory] = useState([]);
     const [sortOrder, setSortOrder] = useState('desc'); // Trạng thái sắp xếp
     const [currentPage, setCurrentPage] = useState(1); // Trạng thái trang hiện tại
-    const itemsPerPage = 3; // Số lượng mục trên mỗi trang
+    const itemsPerPage = 2; // Số lượng mục trên mỗi trang
 
     // API get 
     useEffect(() => {
-        AxiosInstance.get(`history/`)
-            .then(res => setHistory(res.data))
+        AxiosInstance.get(`api/print-history/history`)
+            .then((res) => {
+            console.log(res.data);
+            setHistory(res.data.data);
+            console.log(histories);
+            
+        })
             .catch(err => console.log(err))
     }, []);
 
@@ -73,14 +78,14 @@ export default function PrintLog ()  {
                                 currentItems.length > 0 ? (
                                     currentItems.map((d, i) => (
                                         <tr key={i}>
-                                            <td>{d.ID}</td>
-                                            <td>{d.Name}</td>
-                                            <td>{d.Time}</td>
-                                            <td>{d.user}</td>
-                                            <td>{d.File}</td>
-                                            <td>{d.Pages}</td>
-                                            <td>{d.size}</td>
-                                            <td>{d.Type}</td>
+                                            <td>{d.printerId}</td>
+                                            <td>{d.printerName}</td>
+                                            <td>{d.printedAt}</td>
+                                            <td>{d.userName}</td>
+                                            <td>{d.fileName}</td>
+                                            <td>{d.pages}</td>
+                                            <td>{d.paperSize}</td>
+                                            <td>{d.fileType}</td>
                                         </tr>
                                     ))
                                 ) : (
