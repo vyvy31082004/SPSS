@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../Components/header";
+import Header from "./Header";
 import PrinterSelection from "./PrinterSelection";
 import PrintContainer from "../../Components/container";
 import { usePrintSettings } from "./PrintSettingContext";
@@ -21,18 +21,9 @@ function PrintSettingsPage() {
   console.log("oitroioi", printSettings);
 
 
-  const handlePrint = async () => {
-    try {
-      // Lưu cài đặt in
-      await savePrintSettings();
-      alert("Cài đặt in đã được lưu thành công!");
-
-      // Điều hướng đến trang xác nhận hoặc thực hiện in
-      console.log("Settings:", printSettings); // Kiểm tra cài đặt
-    } catch (error) {
-      console.error("Error while saving print settings:", error);
-      alert("Có lỗi xảy ra khi lưu cài đặt in.");
-    }
+  const handleNext = () => {
+    // Navigate to /PrintJob and pass printSettings as state
+    navigate('/PrintJob', { state: { printSettings } });
   };
   
 
@@ -45,7 +36,7 @@ function PrintSettingsPage() {
           <PrintOptions />
         </OptionsContainer>
         <ButtonContainer>
-          <Button title="Next" onClick={handlePrint} />
+          <Button title="Next" onClick={handleNext} />
           <Button title="Back" onClick={() => navigate(-1)} />
         </ButtonContainer>
       </MainContent>
@@ -89,8 +80,9 @@ const MainContent = styled.div`
 
 const OptionsContainer = styled.div`
   display: flex;
+  margin-top: 0px;
+  padding-left: 20px;
   flex-direction: column;
-  gap: 20px; /* Space between options */
   width: 100%;
   @media (max-width: 991px) {
     gap: 15px;
@@ -98,7 +90,7 @@ const OptionsContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 50px;
   display: flex;
   justify-content: flex-end; /* Align buttons to the right */
   align-items: center; /* Center buttons vertically */

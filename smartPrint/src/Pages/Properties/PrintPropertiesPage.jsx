@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'; // Import hook useNavigate
 import PageSizeSelector from './PageSizeSelector';
 import { usePrintSettings } from '../PageSetting/PrintSettingContext';
 import Button from '../../Button/Button';
-import Header from "../../Components/header";
+import Header from '../PageSetting/Header';
 import OrientationSelector from './OrientationSelector';
 import ColorModeSelector from './ColorModeSelector';
 import PrintModeSelector from './PrintModeSelector';
@@ -70,7 +70,7 @@ const handlePrintMode = (value) => {
 
   return (
     <ReusableContainer>
-      <Header title="Kích thước trang" />
+      <Header title="Thuộc tính in" />
       <ContentWrapper>
         <ContentRow>
         <PageSizeSection>

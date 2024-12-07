@@ -56,8 +56,9 @@ function PrinterSelection() {
       <Modal
         show={showPrinterList}
         onHide={togglePrinterList}
-        backdrop="static"
-        keyboard={false}
+        backdrop="static" 
+        keyboard={false} 
+        animation={false}
       >
         <PrinterList onClose={togglePrinterList} />
       </Modal>
@@ -66,8 +67,9 @@ function PrinterSelection() {
       <Modal
         show={showPropertiesPage}
         onHide={togglePropertiesPage}
-        backdrop="static"
-        keyboard={false}
+        backdrop="static" 
+        keyboard={false} 
+        animation={false}
       >
         <PrintPropertiesPage onClose={togglePropertiesPage} />
       </Modal>
@@ -91,7 +93,7 @@ const PrinterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 50px 50px 50px;
+  padding: 50px 50px 20px;
   width: 100%;
 `;
 
