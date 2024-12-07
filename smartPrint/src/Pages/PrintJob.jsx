@@ -11,6 +11,7 @@ import axios from 'axios';
 const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
   const navigate = useNavigate();
+  const [selectedFileName, setSelectedFileName] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedFileName, setSelectedFileName] = useState('');
     const [progress, setProgress] = useState(0);
@@ -86,11 +87,7 @@ const PrintJob = ({}) => {
             const response = AxiosInstance.post("api/print-history/add", updatedHistoryData);
             if (response.status===201)
             {console.log("OK")}
-        } else {
-            alert('Không đủ số trang để in!');
-        }
-          // Lưu cài đặt in
-          await savePrintSettings();
+            await savePrintSettings();
         //   alert("Cài đặt in đã được lưu thành công!");
           console.log("Settings:", printSettings); // Kiểm tra cài đặt
       
@@ -110,6 +107,11 @@ const PrintJob = ({}) => {
               }
             });
           }, 500); // Tăng tiến độ mỗi 500ms
+
+        } else {
+            alert('Không đủ số trang để in!');
+        }
+          // Lưu cài đặt in
         } catch (error) {
           console.error("Error while saving print settings:", error);
           alert("Có lỗi xảy ra khi lưu cài đặt in.");
