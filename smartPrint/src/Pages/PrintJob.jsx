@@ -11,7 +11,6 @@ import axios from 'axios';
 const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
   const navigate = useNavigate();
-  const [selectedFileName, setSelectedFileName] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedFileName, setSelectedFileName] = useState('');
     const [progress, setProgress] = useState(0);
