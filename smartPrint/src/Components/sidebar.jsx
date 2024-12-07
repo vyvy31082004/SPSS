@@ -21,12 +21,18 @@ export default function Sidebar(props) {
                 <Navbar className="flex-column " style={{ height: '100vh', width: '205px', backgroundColor: '#D9D9D9' }}>
                     <div className='' onClick={()=>{navigate('/Home')}}>
                         <img
-                            src= "src\assets\logo.png"// Replace with your image path or URL
+                            src= "src\assets\ava.png"// Replace with your image path or URL
                             style={{ width: '100px', height: '100px', marginBottom: '10px' }}
                         />
-                        <h5 style={{textAlign: 'center' }}>SPSS</h5>
+                        <h5 style={{textAlign: 'center' }}>Menu</h5>
                     </div>
                     <Nav className="flex-column">
+                        <Nav.Item>
+                            <Nav.Link className='p-2' >
+                                <i className="bi bi-clipboard-data pe-2"></i>
+                                Thống kê
+                            </Nav.Link>
+                        </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className='p-2' onClick={()=>{navigate('/PrintLog')}}>
                             <i className="bi bi-clock-history pe-2"></i>

@@ -12,6 +12,7 @@ const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
   const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const [selectedFileName, setSelectedFileName] = useState('');
     const [progress, setProgress] = useState(0);
     const [isPrinting, setIsPrinting] = useState(false); // Track if printing is in progress
     const [selectedFile,setselectedFile]=useState({});
