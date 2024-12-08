@@ -7,10 +7,10 @@ import { Modal, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AxiosInstance from '../Components/axios';
 import axios from 'axios';
-
+import moment from 'moment-timezone';
 const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [selectedFileName, setSelectedFileName] = useState('');
     const [progress, setProgress] = useState(0);
@@ -56,11 +56,13 @@ const PrintJob = ({}) => {
     }, [currentPages]);
 
     
-    const currentDate=new Date();
+    const currentDate=new Date(); 
+    
+
     const [historyData,sethistoryData]=useState({
         printerId: null,
         printerName: null,
-        userName: "Phan Thao Vy",
+        userName: "Thao Vy",
         fileName: null,
         pages: null,
         paperSize: null,
@@ -81,6 +83,7 @@ const PrintJob = ({}) => {
                 fileType: selectedFile.fileType, 
                 printerId: parseData.selectedPrinterID, 
                 printerName: parseData.selectedPrinterName };
+               
             sethistoryData(updatedHistoryData)
             console.log(updatedHistoryData);
             const response = AxiosInstance.post("api/print-history/add", updatedHistoryData);

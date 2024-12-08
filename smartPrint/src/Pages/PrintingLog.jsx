@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import AxiosInstance from '../Components/axios';
 import Pagination from 'react-bootstrap/Pagination';
-
+import moment from 'moment-timezone';
 export default function PrintLog ()  {
     const [histories, setHistory] = useState([]);
     const [sortOrder, setSortOrder] = useState('desc'); // Trạng thái sắp xếp
@@ -79,7 +79,7 @@ export default function PrintLog ()  {
                                         <tr key={i}>
                                             <td>{d.printerId}</td>
                                             <td>{d.printerName}</td>
-                                            <td>{d.printedAt}</td>
+                                            <td>{moment(d.printedAt).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')}</td>
                                             <td>{d.userName}</td>
                                             <td>{d.fileName}</td>
                                             <td>{d.pages}</td>

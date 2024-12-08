@@ -13,7 +13,7 @@ exports.getPrintHistory = async (req, res) => {
 exports.addPrintHistory = async (req, res) => {
     try {
         const { printerId, printerName,printedAt, userName, fileName, pages, paperSize, fileType } = req.body;
-
+        
         const newHistory = new PrintHistory({
             printerId,
             printerName,
