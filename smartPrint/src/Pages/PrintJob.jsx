@@ -8,6 +8,42 @@ import { useNavigate } from 'react-router-dom';
 import AxiosInstance from '../Components/axios';
 import axios from 'axios';
 import moment from 'moment-timezone';
+
+
+function calculateTotalPagesToPrint(fileTotalPages, printRange, copies, sidesPerSheet, pagesPerSheet) {
+  // Xử lý input 'sidesPerSheet'
+  const sidesPerSheetNumber = sidesPerSheet === "Hai mặt" ? 2 : 1;
+
+  // Xử lý input 'pagesPerSheet'
+  const pagesPerSheetMapping = {
+    One: 1,
+    Two: 2,
+    Four: 4,
+  };
+  const pagesPerSheetNumber = pagesPerSheetMapping[pagesPerSheet] || 1; // Mặc định là 1 nếu không tìm thấy
+
+  // 1. Xử lý phạm vi in
+  let rangeStart = 1; // Mặc định bắt đầu từ trang 1
+  let rangeEnd = fileTotalPages; // Mặc định kết thúc ở số trang của tệp
+
+  if (printRange && printRange.toLowerCase() !== "all") {
+    const [start, end] = printRange.split('-').map(Number);
+    rangeStart = Math.max(1, start); // Đảm bảo không nhỏ hơn 1
+    rangeEnd = Math.min(fileTotalPages, end); // Đảm bảo không lớn hơn tổng số trang
+  }
+
+  const rangeTotalPages = rangeEnd - rangeStart + 1;
+
+  // 2. Tính số trang thực tế cần in trên một bản
+  const pagesToPrintPerCopy = Math.ceil(rangeTotalPages / pagesPerSheetNumber);
+
+  // 3. Tính tổng số trang sẽ in (bao gồm số bản sao và số mặt in)
+  const totalPagesToPrint = Math.ceil(pagesToPrintPerCopy / sidesPerSheetNumber) * sidesPerSheetNumber * copies;
+
+  return totalPagesToPrint;
+}
+
+
 const PrintJob = ({}) => {
     const { printSettings, savePrintSettings } = usePrintSettings();
     const navigate = useNavigate();
@@ -22,7 +58,7 @@ const PrintJob = ({}) => {
         return savedPages ? parseInt(savedPages, 10) : 100; // Giả sử sinh viên có 100 trang để in
     })
     const [selectedFilePages, setSelectedFilePages] = useState(0); // Số trang của file được chọn
-
+    const [copies, setCopies] = useState(1); // Số bản copy
     useEffect(() => {
       // Kiểm tra xem cờ hiệu có tồn tại không
       const isInitialRun = localStorage.getItem('isInitialRun');
@@ -43,13 +79,29 @@ const PrintJob = ({}) => {
               setSelectedFileName(res.data?.fileName || '');
               setselectedFile(res.data);
               setSelectedFilePages(res.data?.pageSize ?? 0); // Giả sử API trả về số trang của file
+              setCopies(res.data?.printcopies ?? 1);
           })
           .catch(() => {
               setSelectedFileName('');
               setSelectedFilePages(0);
+              setCopies(1);
           }); // Nếu không có file được chọn
       }, []);
-
+      
+      useEffect(() => { 
+        // Lấy file được chọn
+      axios.get('http://localhost:5000/files/printsettings')
+      .then((res) => {
+          
+          setCopies(res.data?.printcopies ?? 1);
+      })
+      .catch(() => {
+         
+          setCopies(1);
+      }); // Nếu không có file được chọn
+        
+    }, []);
+      
       useEffect(() => { 
         // Lưu số trang hiện có vào Local Storage khi thay đổi 
         localStorage.setItem('currentPages', currentPages);
@@ -69,11 +121,16 @@ const PrintJob = ({}) => {
         fileType: null,
         printedAt: currentDate
     });
- 
+    const total = calculateTotalPagesToPrint(selectedFilePages,printSettings.pagerange,printSettings.printcopies,printSettings.printmode,printSettings.papersheet);
+    // const [total, setTotal] = useState(0);
     const handlePrint = async () => {
         try {
-          if (selectedFilePages <= currentPages) {
-            setCurrentPages(prevPages => prevPages - selectedFilePages);
+
+          const totalPages = calculateTotalPagesToPrint(selectedFilePages,printSettings.pagerange,printSettings.printcopies,printSettings.printmode,printSettings.papersheet);
+          //selectedFilePages * printSettings.printcopies;
+          //setTotal(totalPages);
+          if (totalPages <= currentPages) {
+            setCurrentPages(prevPages => prevPages - totalPages);
             alert('Xác nhận in!');
             const getHistoryData = localStorage.getItem('printSettings');
             const parseData = JSON.parse(getHistoryData);
@@ -133,6 +190,7 @@ const PrintJob = ({}) => {
       <div
         style={{
           padding: '20px',
+         
           fontFamily: 'Arial, sans-serif',
           lineHeight: '1.8',
           backgroundColor: '#f1f1f1',
@@ -142,11 +200,12 @@ const PrintJob = ({}) => {
         }}
       >
         <h1 style={{ marginBottom: '20px', textAlign: 'center', color: '#333' }}>
-          Thông tin việc in
+          Đơn xác nhận in 
         </h1>
         <div
           style={{
             display: 'grid',
+           
             gridTemplateColumns: '1fr 1fr',
             gap: '20px',
             background: '#f1f1f1',
@@ -256,10 +315,35 @@ const PrintJob = ({}) => {
           >
             <strong>Chế độ in:</strong> {printSettings.printmode} trên mỗi tờ giấy
           </div>
-          <hr />
+          <div><br></br></div>
         </div>
 
         {/* Progress bar and buttons */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '50px',
+            display: 'flex',
+            gap: '10px',
+            alignItems: 'flex-end',
+          }}
+        >
+          <div
+            style={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              backgroundColor: '#fff',
+              border: '1px solid #0B4661',
+              color: '#0B4661',
+              minWidth: '100px',
+            }}
+          >
+            Tổng số giấy cần in: {total}
+          </div>
+
+          
+        </div>
         <div
           style={{
             position: 'absolute',

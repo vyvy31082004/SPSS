@@ -15,7 +15,7 @@ const Print = () => {
         return savedPages ? parseInt(savedPages, 10) : 100; // Giả sử sinh viên có 100 trang để in
     })
     const [selectedFilePages, setSelectedFilePages] = useState(0); // Số trang của file được chọn
-
+    
     // useEffect(() => {
     //     // Lấy file được chọn
     //     axios.get('http://localhost:5000/files/selected')
@@ -116,7 +116,7 @@ const Print = () => {
                     <div className="d-flex justify-content-evenly pt-5">
                         <div onClick={() => { navigate('/Print/Upload') }} className="btn btn-primary btn-lg">Chọn tệp</div>
                         <div>{selectedFileName || 'Chưa có tệp nào được chọn'}</div>
-                        <div onClick={handlePrint} className="btn btn-primary btn-lg">In</div>
+                        {/* <div onClick={handlePrint} className="btn btn-primary btn-lg">In</div> */}
                     </div>
                 </div>
             </section>
