@@ -5,7 +5,10 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const { PDFDocument } = require('pdf-lib');
-
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -17,6 +20,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/fileuploads', {
   useUnifiedTopology: true,
 }).then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
 
 // Mongoose Schema cho file
 const fileSchema = new mongoose.Schema({
