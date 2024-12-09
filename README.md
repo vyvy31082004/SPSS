@@ -31,6 +31,9 @@ Hệ thống của nhóm có các chức năng như sau:
   ```
 ## Thành viên:
 Chủ biên: Song Khuê, Thảo Vy
+
 Front-end: Thảo Vy, Quỳnh Như
+
 Back-end: Song Khuê, Gia Kiệt, Bảo Long
+
 Báo cáo: Tất cả 5 thành viên
