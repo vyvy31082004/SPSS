@@ -32,10 +32,7 @@ export default function PrintLog ()  {
         setHistory(sortedData);
     };
 
-    const toggleSortOrder = () => {
-        setSortOrder(prevOrder => prevOrder === 'asc' ? 'desc' : 'asc');
-        sortDataByDate();
-    };
+    
 
     // Tính toán các mục hiển thị dựa trên trang hiện tại
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -53,9 +50,7 @@ export default function PrintLog ()  {
             <section className="" style={{backgroundColor: "white", padding: '24px'}}>
                 <div className="d-flex justify-content-between mb-2"> 
                     <h5>Danh sách</h5>
-                    <Button className='btn btn-secondary' onClick={toggleSortOrder}>
-                        {sortOrder === 'asc' ? 'Gần nhất' : 'Xa nhất'}
-                    </Button>
+                    
                 </div>
                 <hr />
                 <div className="d-flex justify-content-between">
