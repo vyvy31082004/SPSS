@@ -9,7 +9,6 @@ import AxiosInstance from '../Components/axios';
 import axios from 'axios';
 import moment from 'moment-timezone';
 
-
 function calculateTotalPagesToPrint(fileTotalPages, printRange, copies, sidesPerSheet, pagesPerSheet) {
   // Xử lý input 'sidesPerSheet'
   const sidesPerSheetNumber = sidesPerSheet === "Hai mặt" ? 2 : 1;
@@ -38,7 +37,7 @@ function calculateTotalPagesToPrint(fileTotalPages, printRange, copies, sidesPer
   const pagesToPrintPerCopy = Math.ceil(rangeTotalPages / pagesPerSheetNumber);
 
   // 3. Tính tổng số trang sẽ in (bao gồm số bản sao và số mặt in)
-  const totalPagesToPrint = Math.ceil(pagesToPrintPerCopy / sidesPerSheetNumber) * sidesPerSheetNumber * copies;
+  const totalPagesToPrint = Math.ceil(pagesToPrintPerCopy / sidesPerSheetNumber) * copies;
 
   return totalPagesToPrint;
 }
@@ -55,7 +54,7 @@ const PrintJob = ({}) => {
     const [currentPages, setCurrentPages] = useState(() => { 
         // Tải số trang hiện có từ Local Storage khi khởi động ứng dụng 
         const savedPages = localStorage.getItem('currentPages'); 
-        return savedPages ? parseInt(savedPages, 10) : 100; // Giả sử sinh viên có 100 trang để in
+        return savedPages ? parseInt(savedPages, 10) : 200; // Giả sử sinh viên có 100 trang để in
     })
     const [selectedFilePages, setSelectedFilePages] = useState(0); // Số trang của file được chọn
     const [copies, setCopies] = useState(1); // Số bản copy
@@ -189,25 +188,26 @@ const PrintJob = ({}) => {
       <Header />
       <div
         style={{
-          padding: '20px',
+          padding: '2px',
          
           fontFamily: 'Arial, sans-serif',
-          lineHeight: '1.8',
+          lineHeight: '1.4',
           backgroundColor: '#f1f1f1',
-          borderRadius: '8px',
+          borderRadius: '4px',
           margin: '50px 50px 50px',
           position: 'relative',
         }}
       >
-        <h1 style={{ marginBottom: '20px', textAlign: 'center', color: '#333' }}>
+        <h1 style={{ marginBottom: '3px', textAlign: 'center', color: '#333' }}>
           Đơn xác nhận in 
         </h1>
+        
         <div
           style={{
             display: 'grid',
            
             gridTemplateColumns: '1fr 1fr',
-            gap: '20px',
+            gap: '17px',
             background: '#f1f1f1',
             padding: '20px',
           }}
@@ -227,7 +227,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Máy in được chọn:</strong> {printSettings.selectedPrinterName}
@@ -237,7 +237,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Phạm vi trang:</strong> {printSettings.pagerange}
@@ -247,7 +247,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Số bản in:</strong> {printSettings.printcopies}
@@ -257,7 +257,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Ghép bộ:</strong> {printSettings.printcollate}
@@ -267,7 +267,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>File Page Per Sheet:</strong> {printSettings.papersheet}
@@ -278,7 +278,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Chế độ màu:</strong> {printSettings.colormode}
@@ -288,7 +288,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Hướng giấy:</strong> {printSettings.pageorien}
@@ -299,7 +299,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Kích thước giấy:</strong> {printSettings.pagesize}
@@ -310,7 +310,7 @@ const PrintJob = ({}) => {
               padding: '10px',
               background: '#fff',
               borderRadius: '4px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
             }}
           >
             <strong>Chế độ in:</strong> {printSettings.printmode} trên mỗi tờ giấy
@@ -331,7 +331,7 @@ const PrintJob = ({}) => {
         >
           <div
             style={{
-              padding: '10px 20px',
+              padding: '6px 20px',
               borderRadius: '8px',
               backgroundColor: '#fff',
               border: '1px solid #0B4661',
@@ -359,11 +359,11 @@ const PrintJob = ({}) => {
             onClick={handlePrint}
             
             style={{
-              padding: '10px 20px',
+              padding: '10px ',
               cursor: 'pointer',
               backgroundColor: '#0B4661',
               color: 'white',
-              minWidth: '100px',
+              minWidth: '90px',
             }}
           >
             Đồng ý
@@ -371,9 +371,9 @@ const PrintJob = ({}) => {
           <button
             onClick= {()=> navigate(-1)}
             style={{
-              padding: '10px 20px',
+              padding: '10px',
               cursor: 'pointer',
-              minWidth: '100px',
+              minWidth: '90px',
             }}
           >
             Hủy

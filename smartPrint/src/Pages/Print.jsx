@@ -16,18 +16,6 @@ const Print = () => {
     })
     const [selectedFilePages, setSelectedFilePages] = useState(0); // Số trang của file được chọn
     
-    // useEffect(() => {
-    //     // Lấy file được chọn
-    //     axios.get('http://localhost:5000/files/selected')
-    //       .then((res) => {
-    //           setSelectedFileName(res.data?.fileName ||'');
-    //           setSelectedFilePages(res.data?.pageSize??0); // Giả sử API trả về số trang của file
-    //       })
-    //       .catch(() => {
-    //           setSelectedFileName('');
-    //           setSelectedFilePages(0);
-    //       }); // Nếu không có file được chọn
-    // }, []);
     useEffect(() => {
         // Kiểm tra xem cờ hiệu có tồn tại không
         const isInitialRun = localStorage.getItem('isInitialRun');
