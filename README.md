@@ -29,6 +29,10 @@ Hệ thống của nhóm có các chức năng như sau:
    ```c
    npm start
   ```
++ Mở một terminal khác và chạy dòng lệnh
+   ```c
+   node server.js
+  ```
 ## Thành viên:
 Chủ biên: Song Khuê, Thảo Vy
 
