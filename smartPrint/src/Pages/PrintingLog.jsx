@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
+
 import AxiosInstance from '../Components/axios';
 import Pagination from 'react-bootstrap/Pagination';
 import moment from 'moment-timezone';
 export default function PrintLog ()  {
     const [histories, setHistory] = useState([]);
-    const [sortOrder, setSortOrder] = useState('desc'); // Trạng thái sắp xếp
+    
     const [currentPage, setCurrentPage] = useState(1); // Trạng thái trang hiện tại
     const itemsPerPage = 2; // Số lượng mục trên mỗi trang
 
@@ -23,14 +21,7 @@ export default function PrintLog ()  {
             .catch(err => console.log(err))
     }, []);
 
-    const sortDataByDate = () => {
-        const sortedData = [...histories].sort((a, b) => {
-            return sortOrder === 'asc' 
-                ? new Date(a.Time) - new Date(b.Time) 
-                : new Date(b.Time) - new Date(a.Time);
-        });
-        setHistory(sortedData);
-    };
+    
 
     
 
