@@ -33,6 +33,24 @@ Hệ thống của nhóm có các chức năng như sau:
    ```c
    node server.js
   ```
+
+## Tài khoản đăng nhập:
++  email:daicoviet@hcmut.edu.vn
+    password:1234
++  email:annamquoc@hcmut.edu.vn
+    password:12345
++  email:long.thaibao2202@hcmut.edu.vn
+    password:1234
++  email:huynhbaminh@hcmut.edu.vn
+    password:1234
++ email:leminhhuyen@hcmut.edu.vn
+    password:1234
++  email:truongquynhmai@hcmut.edu.vn
+    password:1234
++ email:phamvudacgia@hcmut.edu.vn
+    password:1234
++ email:dauvulankhue@hcmut.edu.vn
+    password:1234
 ## Thành viên:
 Chủ biên: Song Khuê, Thảo Vy
 
